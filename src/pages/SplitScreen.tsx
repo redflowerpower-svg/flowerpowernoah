@@ -29,7 +29,7 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
     setUserMoved(true);
   }, []);
 
-  // Compute current divider pixel position for grab detection
+  // Current divider fraction (0..1) for rendering the fixed overlay
   const getDividerFraction = useCallback(() => {
     if (userMoved) return splitRatio;
     const expandRatio = 1.6;
@@ -39,7 +39,7 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
     return 0.5;
   }, [userMoved, splitRatio, activePanel]);
 
-  // Touch listeners on the whole container — grab zone around divider line
+  // Touch on the whole container: detect if finger starts near divider line
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -76,6 +76,8 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
 
     const onTouchEnd = () => {
       isDragging.current = false;
+      // Reset so the next tap on a logo works correctly
+      hasDragged.current = false;
     };
 
     container.addEventListener('touchstart', onTouchStart, { passive: true });
@@ -89,14 +91,17 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
     };
   }, [computeRatio, getDividerFraction]);
 
-  // Mouse drag listeners (desktop)
+  // Mouse drag (desktop)
   useEffect(() => {
     const onMouseMove = (e: MouseEvent) => {
       if (!isDragging.current) return;
       hasDragged.current = true;
       computeRatio(e.clientX, e.clientY);
     };
-    const onMouseUp = () => { isDragging.current = false; };
+    const onMouseUp = () => {
+      isDragging.current = false;
+      hasDragged.current = false;
+    };
     window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('mouseup', onMouseUp);
     return () => {
@@ -108,7 +113,6 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
   // Flex values
   let villageFlex: string;
   let pizzaFlex: string;
-
   if (userMoved) {
     villageFlex = String(splitRatio);
     pizzaFlex = String(1 - splitRatio);
@@ -122,7 +126,7 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
   const villageExpanded = !userMoved && activePanel === 'village';
   const pizzaExpanded = !userMoved && activePanel === 'pizza';
 
-  // Panel handlers — reset userMoved so automatic animation always works
+  // Panel handlers — always reset userMoved so automatic animation works
   const handleVillageMouseEnter = () => {
     if (isMobile || isDragging.current) return;
     setUserMoved(false);
@@ -145,8 +149,9 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
     if (!isMobile && !hasDragged.current) onSelectPizza();
   };
 
+  // Mobile tap on panel: first tap expands, second tap navigates
   const handleVillageTouch = (e: React.TouchEvent) => {
-    if (isDragging.current || hasDragged.current) return;
+    if (isDragging.current) return;
     e.preventDefault();
     if (activePanel === 'village') {
       onSelectVillage();
@@ -156,7 +161,7 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
     }
   };
   const handlePizzaTouch = (e: React.TouchEvent) => {
-    if (isDragging.current || hasDragged.current) return;
+    if (isDragging.current) return;
     e.preventDefault();
     if (activePanel === 'pizza') {
       onSelectPizza();
@@ -173,6 +178,24 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
     isDragging.current = true;
     hasDragged.current = false;
     dragStartPos.current = e.clientX;
+  };
+
+  // Divider fraction for the fixed overlay position
+  const fraction = getDividerFraction();
+  const dividerLineStyle: React.CSSProperties = isMobile
+    ? { top: `${fraction * 100}%`, left: 0, width: '100%', height: '1px' }
+    : { left: `${fraction * 100}%`, top: 0, width: '1px', height: '100%' };
+  const dividerCircleStyle: React.CSSProperties = isMobile
+    ? { top: `${fraction * 100}%`, left: '50%', transform: 'translate(-50%, -50%)' }
+    : { left: `${fraction * 100}%`, top: '50%', transform: 'translate(-50%, -50%)' };
+  const grabStripStyle: React.CSSProperties = isMobile
+    ? { top: `${fraction * 100}%`, left: 0, width: '100%', height: '44px', transform: 'translateY(-50%)', cursor: 'ns-resize' }
+    : { left: `${fraction * 100}%`, top: 0, width: '44px', height: '100%', transform: 'translateX(-50%)', cursor: 'ew-resize' };
+  const arrowsDesktopStyle: React.CSSProperties = {
+    left: `${fraction * 100}%`, top: '50%', transform: 'translate(-50%, -50%)',
+  };
+  const arrowsMobileStyle: React.CSSProperties = {
+    top: `${fraction * 100}%`, left: '50%', transform: 'translate(-50%, -50%)',
   };
 
   return (
@@ -222,79 +245,6 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
         )}
       </div>
 
-      {/* Divider — zero size in flex, graphics overflow:visible, transparent background */}
-      <div
-        className="relative z-20 flex-shrink-0"
-        style={{ width: 0, height: 0, overflow: 'visible', background: 'transparent' }}
-        onMouseDown={handleDividerMouseDown}
-      >
-        {/* Invisible grab strip (wide/tall enough to be easily grabbed) */}
-        <div
-          className="absolute"
-          style={{
-            top: isMobile ? '50%' : 0,
-            left: isMobile ? 0 : '50%',
-            transform: isMobile ? 'translate(0, -50%)' : 'translate(-50%, 0)',
-            width: isMobile ? '100vw' : '44px',
-            height: isMobile ? '44px' : '100vh',
-            cursor: isMobile ? 'ns-resize' : 'ew-resize',
-            background: 'transparent',
-          }}
-        />
-
-        {/* 1px visible line */}
-        <div
-          className="absolute pointer-events-none"
-          style={{
-            top: isMobile ? '50%' : 0,
-            left: isMobile ? 0 : '50%',
-            transform: isMobile ? 'translate(0, -50%)' : 'translate(-50%, 0)',
-            width: isMobile ? '100vw' : '1px',
-            height: isMobile ? '1px' : '100vh',
-            background: 'rgba(255,255,255,0.3)',
-          }}
-        />
-
-        {/* Circle handle — centered on the intersection point */}
-        <div
-          className="absolute pointer-events-none flex items-center justify-center"
-          style={{
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '28px',
-            height: '28px',
-            borderRadius: '50%',
-            border: '1px solid rgba(255,255,255,0.5)',
-            background: 'rgba(15,15,15,0.6)',
-            backdropFilter: 'blur(8px)',
-            boxShadow: '0 2px 14px rgba(0,0,0,0.45)',
-          }}
-        >
-          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'rgba(255,255,255,0.75)' }} />
-        </div>
-
-        {/* Desktop arrows (left/right) */}
-        <svg
-          className="absolute pointer-events-none hidden md:block"
-          width="44" height="14" viewBox="0 0 44 14" fill="none"
-          style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: 0.4 }}
-        >
-          <path d="M15 7 L5 7 M5 7 L9 4 M5 7 L9 10" stroke="white" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M29 7 L39 7 M39 7 L35 4 M39 7 L35 10" stroke="white" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-
-        {/* Mobile arrows (up/down) */}
-        <svg
-          className="absolute pointer-events-none block md:hidden"
-          width="14" height="44" viewBox="0 0 14 44" fill="none"
-          style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: 0.4 }}
-        >
-          <path d="M7 15 L7 5 M7 5 L4 9 M7 5 L10 9" stroke="white" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-          <path d="M7 29 L7 39 M7 39 L4 35 M7 39 L10 35" stroke="white" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </div>
-
       {/* Pizza panel */}
       <div
         className="relative overflow-hidden"
@@ -334,6 +284,63 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
             <span className="text-white text-sm tracking-[0.3em] uppercase" style={{ writingMode: 'vertical-rl', fontFamily: 'Inter, sans-serif', fontWeight: 300, opacity: 0.5 }}>Pizza Ranong</span>
           </div>
         )}
+      </div>
+
+      {/* Divider overlay — fixed to viewport so circle is always centered */}
+      <div
+        className="fixed inset-0 z-20 pointer-events-none"
+        style={{ background: 'transparent' }}
+      >
+        {/* 1px visible line */}
+        <div
+          className="absolute pointer-events-none"
+          style={{ ...dividerLineStyle, background: 'rgba(255,255,255,0.3)', transition: isDragging.current ? 'none' : 'top 0.7s cubic-bezier(0.4,0,0.2,1), left 0.7s cubic-bezier(0.4,0,0.2,1)' }}
+        />
+
+        {/* Invisible grab strip — pointer-events:auto */}
+        <div
+          className="absolute pointer-events-auto"
+          style={{ ...grabStripStyle, background: 'transparent' }}
+          onMouseDown={handleDividerMouseDown}
+        />
+
+        {/* Circle handle */}
+        <div
+          className="absolute pointer-events-none flex items-center justify-center"
+          style={{
+            ...dividerCircleStyle,
+            width: '28px',
+            height: '28px',
+            borderRadius: '50%',
+            border: '1px solid rgba(255,255,255,0.5)',
+            background: 'rgba(15,15,15,0.6)',
+            backdropFilter: 'blur(8px)',
+            boxShadow: '0 2px 14px rgba(0,0,0,0.45)',
+            transition: isDragging.current ? 'none' : 'top 0.7s cubic-bezier(0.4,0,0.2,1), left 0.7s cubic-bezier(0.4,0,0.2,1)',
+          }}
+        >
+          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'rgba(255,255,255,0.75)' }} />
+        </div>
+
+        {/* Desktop arrows */}
+        <svg
+          className="absolute pointer-events-none hidden md:block"
+          width="44" height="14" viewBox="0 0 44 14" fill="none"
+          style={{ ...arrowsDesktopStyle, opacity: 0.4, transition: isDragging.current ? 'none' : 'left 0.7s cubic-bezier(0.4,0,0.2,1)' }}
+        >
+          <path d="M15 7 L5 7 M5 7 L9 4 M5 7 L9 10" stroke="white" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M29 7 L39 7 M39 7 L35 4 M39 7 L35 10" stroke="white" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+
+        {/* Mobile arrows */}
+        <svg
+          className="absolute pointer-events-none block md:hidden"
+          width="14" height="44" viewBox="0 0 14 44" fill="none"
+          style={{ ...arrowsMobileStyle, opacity: 0.4, transition: isDragging.current ? 'none' : 'top 0.7s cubic-bezier(0.4,0,0.2,1)' }}
+        >
+          <path d="M7 15 L7 5 M7 5 L4 9 M7 5 L10 9" stroke="white" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M7 29 L7 39 M7 39 L4 35 M7 39 L10 35" stroke="white" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       </div>
 
       <style>{`
