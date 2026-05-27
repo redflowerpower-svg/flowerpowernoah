@@ -68,12 +68,13 @@ export default function VillageFooter({ onNavigate }: Props) {
               flowerpowerphayam@gmail.com
             </a>
           </div>
+          {/* Icone social con area touch minima di 44x44px come da linee guida mobile */}
           <div className="flex gap-4">
             <a
               href="https://www.instagram.com/flowerpowerphayam"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 border border-stone-700 flex items-center justify-center hover:border-amber-600 hover:text-amber-500 transition-all duration-200 text-stone-400"
+              className="w-11 h-11 border border-stone-700 flex items-center justify-center hover:border-amber-600 hover:text-amber-500 transition-all duration-200 text-stone-400"
             >
               <Instagram size={16} />
             </a>
@@ -81,7 +82,7 @@ export default function VillageFooter({ onNavigate }: Props) {
               href="https://www.facebook.com/flowerpowerphayam"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 border border-stone-700 flex items-center justify-center hover:border-amber-600 hover:text-amber-500 transition-all duration-200 text-stone-400"
+              className="w-11 h-11 border border-stone-700 flex items-center justify-center hover:border-amber-600 hover:text-amber-500 transition-all duration-200 text-stone-400"
             >
               <Facebook size={16} />
             </a>

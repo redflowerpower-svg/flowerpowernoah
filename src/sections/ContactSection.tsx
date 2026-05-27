@@ -16,7 +16,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section className="py-24 bg-stone-50">
+    <section className="py-16 md:py-24 bg-stone-50">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-xs tracking-[0.4em] uppercase text-amber-600 mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -34,7 +34,7 @@ export default function ContactSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Contact info */}
           <div>
             <h3
@@ -114,7 +114,7 @@ export default function ContactSection() {
           </div>
 
           {/* Booking form */}
-          <div className="bg-white p-8 border border-stone-100">
+          <div className="bg-white p-4 sm:p-8 border border-stone-100">
             {sent ? (
               <div className="flex flex-col items-center justify-center h-full text-center py-12">
                 <div className="w-12 h-12 bg-amber-50 flex items-center justify-center mb-4">
@@ -136,7 +136,8 @@ export default function ContactSection() {
                 >
                   Send a Booking Enquiry
                 </h3>
-                <div className="grid grid-cols-2 gap-4">
+                {/* Due colonne solo da sm in su per evitare campi troppo stretti su mobile */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-xs text-stone-400 uppercase tracking-wide block mb-1.5">Name</label>
                     <input
@@ -158,7 +159,7 @@ export default function ContactSection() {
                     />
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="text-xs text-stone-400 uppercase tracking-wide block mb-1.5">Check-in</label>
                     <input

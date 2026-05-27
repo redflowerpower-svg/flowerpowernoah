@@ -1,19 +1,162 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface Props {
   onSelectVillage: () => void;
   onSelectPizza: () => void;
 }
 
+// SVG decorativo del fiore riutilizzato in entrambi i pannelli
+function FlowerSvg() {
+  return (
+    <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+      <circle cx="20" cy="20" r="4" fill="white" />
+      <ellipse cx="20" cy="10" rx="3" ry="7" fill="white" opacity="0.7" />
+      <ellipse cx="20" cy="30" rx="3" ry="7" fill="white" opacity="0.7" />
+      <ellipse cx="10" cy="20" rx="7" ry="3" fill="white" opacity="0.7" />
+      <ellipse cx="30" cy="20" rx="7" ry="3" fill="white" opacity="0.7" />
+      <ellipse cx="13" cy="13" rx="3" ry="7" fill="white" opacity="0.5" transform="rotate(-45 13 13)" />
+      <ellipse cx="27" cy="27" rx="3" ry="7" fill="white" opacity="0.5" transform="rotate(-45 27 27)" />
+      <ellipse cx="27" cy="13" rx="3" ry="7" fill="white" opacity="0.5" transform="rotate(45 27 13)" />
+      <ellipse cx="13" cy="27" rx="3" ry="7" fill="white" opacity="0.5" transform="rotate(45 13 27)" />
+    </svg>
+  );
+}
+
+function PizzaSvg() {
+  return (
+    <svg width="36" height="36" viewBox="0 0 40 40" fill="none">
+      <path d="M20 4 L36 34 L4 34 Z" stroke="white" strokeWidth="1.5" fill="none" />
+      <circle cx="20" cy="18" r="2" fill="white" opacity="0.8" />
+      <circle cx="14" cy="26" r="1.5" fill="white" opacity="0.8" />
+      <circle cx="26" cy="26" r="1.5" fill="white" opacity="0.8" />
+      <path d="M4 34 L36 34" stroke="white" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
 export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
   const [hovered, setHovered] = useState<'none' | 'village' | 'pizza'>('none');
+  // Rilevamento dispositivo mobile per adattare l'interazione
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const villageExpanded = hovered === 'village';
   const pizzaExpanded = hovered === 'pizza';
 
+  // Layout mobile: due card impilate verticalmente con interazione touch
+  if (isMobile) {
+    return (
+      <div className="fixed inset-0 flex flex-col overflow-hidden">
+        {/* Pannello Village - mobile */}
+        <div
+          className="relative flex-1 overflow-hidden cursor-pointer"
+          onClick={onSelectVillage}
+        >
+          <img
+            src="https://images.pexels.com/photos/1440727/pexels-photo-1440727.jpeg?auto=compress&cs=tinysrgb&w=1200"
+            alt="Flower Power Farm Village"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/60" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-6 text-center">
+            <div className="mb-4 opacity-70">
+              <FlowerSvg />
+            </div>
+            <p className="text-xs tracking-[0.3em] uppercase mb-2 font-light opacity-85" style={{ fontFamily: 'Inter, sans-serif' }}>
+              Koh Phayam · Thailand
+            </p>
+            <h1
+              className="leading-tight mb-3"
+              style={{
+                fontFamily: 'Cormorant Garamond, Georgia, serif',
+                fontWeight: 300,
+                fontSize: 'clamp(1.8rem, 6vw, 2.8rem)',
+                lineHeight: 1.1,
+              }}
+            >
+              Flower Power<br />
+              <em>Farm Village & Spa</em>
+            </h1>
+            <div className="w-10 h-px bg-white mx-auto mb-3 opacity-50" />
+            <p className="text-xs tracking-widest uppercase font-light mb-6 opacity-75">
+              Villas · Bungalows · Spa
+            </p>
+            <button
+              className="px-6 py-2.5 border border-white text-white text-xs tracking-[0.2em] uppercase active:bg-white active:text-stone-800 transition-all duration-200"
+              style={{ fontFamily: 'Inter, sans-serif' }}
+              onClick={onSelectVillage}
+            >
+              Explore Village
+            </button>
+          </div>
+        </div>
+
+        {/* Divisore orizzontale su mobile */}
+        <div className="relative z-10 h-px bg-white/40 flex items-center justify-center">
+          <div className="bg-white rounded-full w-7 h-7 flex items-center justify-center shadow-lg absolute">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+              <circle cx="7" cy="7" r="2.5" fill="#78716c" />
+            </svg>
+          </div>
+        </div>
+
+        {/* Pannello Pizza - mobile */}
+        <div
+          className="relative flex-1 overflow-hidden cursor-pointer"
+          onClick={onSelectPizza}
+        >
+          <img
+            src="https://images.pexels.com/photos/905847/pexels-photo-905847.jpeg?auto=compress&cs=tinysrgb&w=1200"
+            alt="Flower Power Pizza"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/60" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-6 text-center">
+            <div className="mb-4 opacity-70">
+              <PizzaSvg />
+            </div>
+            <p className="text-xs tracking-[0.3em] uppercase mb-2 font-light opacity-85" style={{ fontFamily: 'Inter, sans-serif' }}>
+              Ranong · Thailand
+            </p>
+            <h1
+              className="leading-tight mb-3"
+              style={{
+                fontFamily: 'Cormorant Garamond, Georgia, serif',
+                fontWeight: 300,
+                fontSize: 'clamp(1.8rem, 6vw, 2.8rem)',
+                lineHeight: 1.1,
+              }}
+            >
+              Flower Power<br />
+              <em>Pizza Ranong</em>
+            </h1>
+            <div className="w-10 h-px bg-white mx-auto mb-3 opacity-50" />
+            <p className="text-xs tracking-widest uppercase font-light mb-6 opacity-75">
+              Authentic Italian · Open Daily
+            </p>
+            <button
+              className="px-6 py-2.5 border border-white text-white text-xs tracking-[0.2em] uppercase active:bg-white active:text-stone-800 transition-all duration-200"
+              style={{ fontFamily: 'Inter, sans-serif' }}
+              onClick={onSelectPizza}
+            >
+              See Our Menu
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Layout desktop: split orizzontale con interazione hover
   return (
     <div className="fixed inset-0 flex overflow-hidden">
-      {/* Village Panel */}
+      {/* Pannello Village - desktop */}
       <div
         className="relative flex-1 overflow-hidden cursor-pointer group"
         style={{
@@ -24,7 +167,6 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
         onMouseLeave={() => setHovered('none')}
         onClick={onSelectVillage}
       >
-        {/* Background image */}
         <img
           src="https://images.pexels.com/photos/1440727/pexels-photo-1440727.jpeg?auto=compress&cs=tinysrgb&w=1600"
           alt="Flower Power Farm Village"
@@ -34,7 +176,6 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
             transition: 'transform 0.9s cubic-bezier(0.4, 0, 0.2, 1)',
           }}
         />
-        {/* Overlay */}
         <div
           className="absolute inset-0"
           style={{
@@ -45,21 +186,9 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
           }}
         />
 
-        {/* Content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-8 text-center">
-          {/* Flower divider top */}
           <div className="mb-6 opacity-70">
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-              <circle cx="20" cy="20" r="4" fill="white" />
-              <ellipse cx="20" cy="10" rx="3" ry="7" fill="white" opacity="0.7" />
-              <ellipse cx="20" cy="30" rx="3" ry="7" fill="white" opacity="0.7" />
-              <ellipse cx="10" cy="20" rx="7" ry="3" fill="white" opacity="0.7" />
-              <ellipse cx="30" cy="20" rx="7" ry="3" fill="white" opacity="0.7" />
-              <ellipse cx="13" cy="13" rx="3" ry="7" fill="white" opacity="0.5" transform="rotate(-45 13 13)" />
-              <ellipse cx="27" cy="27" rx="3" ry="7" fill="white" opacity="0.5" transform="rotate(-45 27 27)" />
-              <ellipse cx="27" cy="13" rx="3" ry="7" fill="white" opacity="0.5" transform="rotate(45 27 13)" />
-              <ellipse cx="13" cy="27" rx="3" ry="7" fill="white" opacity="0.5" transform="rotate(45 13 27)" />
-            </svg>
+            <FlowerSvg />
           </div>
 
           <p
@@ -83,15 +212,9 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
             <em>Farm Village & Spa</em>
           </h1>
 
-          <div
-            className="w-12 h-px bg-white mx-auto mb-4"
-            style={{ opacity: 0.5 }}
-          />
+          <div className="w-12 h-px bg-white mx-auto mb-4" style={{ opacity: 0.5 }} />
 
-          <p
-            className="text-sm tracking-widest uppercase font-light mb-8"
-            style={{ opacity: 0.75 }}
-          >
+          <p className="text-sm tracking-widest uppercase font-light mb-8" style={{ opacity: 0.75 }}>
             Villas · Bungalows · Spa · Restaurant
           </p>
 
@@ -104,7 +227,6 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
           </button>
         </div>
 
-        {/* Side label when compressed */}
         {pizzaExpanded && (
           <div
             className="absolute inset-0 flex items-center justify-center"
@@ -125,7 +247,7 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
         )}
       </div>
 
-      {/* Divider */}
+      {/* Divisore verticale - desktop */}
       <div className="relative z-10 flex items-center justify-center" style={{ width: '2px', background: 'rgba(255,255,255,0.4)' }}>
         <div className="bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg z-20" style={{ position: 'absolute' }}>
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -134,7 +256,7 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
         </div>
       </div>
 
-      {/* Pizza Panel */}
+      {/* Pannello Pizza - desktop */}
       <div
         className="relative flex-1 overflow-hidden cursor-pointer group"
         style={{
@@ -145,7 +267,6 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
         onMouseLeave={() => setHovered('none')}
         onClick={onSelectPizza}
       >
-        {/* Background image */}
         <img
           src="https://images.pexels.com/photos/905847/pexels-photo-905847.jpeg?auto=compress&cs=tinysrgb&w=1600"
           alt="Flower Power Pizza"
@@ -155,7 +276,6 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
             transition: 'transform 0.9s cubic-bezier(0.4, 0, 0.2, 1)',
           }}
         />
-        {/* Overlay */}
         <div
           className="absolute inset-0"
           style={{
@@ -166,17 +286,9 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
           }}
         />
 
-        {/* Content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-8 text-center">
-          {/* Pizza icon */}
           <div className="mb-6 opacity-70">
-            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-              <path d="M20 4 L36 34 L4 34 Z" stroke="white" strokeWidth="1.5" fill="none" />
-              <circle cx="20" cy="18" r="2" fill="white" opacity="0.8" />
-              <circle cx="14" cy="26" r="1.5" fill="white" opacity="0.8" />
-              <circle cx="26" cy="26" r="1.5" fill="white" opacity="0.8" />
-              <path d="M4 34 L36 34" stroke="white" strokeWidth="1.5" />
-            </svg>
+            <PizzaSvg />
           </div>
 
           <p
@@ -200,15 +312,9 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
             <em>Pizza Ranong</em>
           </h1>
 
-          <div
-            className="w-12 h-px bg-white mx-auto mb-4"
-            style={{ opacity: 0.5 }}
-          />
+          <div className="w-12 h-px bg-white mx-auto mb-4" style={{ opacity: 0.5 }} />
 
-          <p
-            className="text-sm tracking-widest uppercase font-light mb-8"
-            style={{ opacity: 0.75 }}
-          >
+          <p className="text-sm tracking-widest uppercase font-light mb-8" style={{ opacity: 0.75 }}>
             Authentic Italian · Open Daily
           </p>
 
@@ -221,7 +327,6 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
           </button>
         </div>
 
-        {/* Side label when compressed */}
         {villageExpanded && (
           <div
             className="absolute inset-0 flex items-center justify-center"

@@ -55,16 +55,16 @@ export default function VillageNav({ onBack, activePage, onNavigate }: Props) {
             className="absolute left-1/2 -translate-x-1/2 text-center"
           >
             <div
-              className="text-sm font-light tracking-[0.25em] uppercase leading-tight transition-colors duration-300"
+              className="text-sm font-light tracking-[0.2em] uppercase leading-tight transition-colors duration-300"
               style={{
                 fontFamily: 'Cormorant Garamond, Georgia, serif',
                 color: scrolled ? '#44403c' : 'white',
-                fontSize: '0.75rem',
+                fontSize: 'clamp(0.6rem, 1.5vw, 0.75rem)',
               }}
             >
               Flower Power
               <br />
-              <span className="italic" style={{ fontSize: '0.7rem' }}>Farm Village & Spa</span>
+              <span className="italic">Farm Village & Spa</span>
             </div>
           </button>
 
@@ -101,18 +101,20 @@ export default function VillageNav({ onBack, activePage, onNavigate }: Props) {
       {/* Mobile drawer */}
       {menuOpen && (
         <div className="fixed inset-0 z-40 bg-stone-900 bg-opacity-97 flex flex-col items-center justify-center">
+          {/* Pulsante di chiusura con area touch adeguata */}
           <button
-            className="absolute top-5 right-6 text-white"
+            className="absolute top-4 right-5 text-white w-11 h-11 flex items-center justify-center"
             onClick={() => setMenuOpen(false)}
+            aria-label="Chiudi menu"
           >
             <X size={24} />
           </button>
-          <div className="flex flex-col items-center gap-8">
+          <div className="flex flex-col items-center gap-7 px-6 w-full max-w-xs">
             {navItems.map(item => (
               <button
                 key={item.id}
                 onClick={() => { onNavigate(item.id); setMenuOpen(false); }}
-                className="text-white text-lg tracking-[0.3em] uppercase font-light hover:opacity-60 transition-opacity"
+                className="text-white text-xl tracking-[0.25em] uppercase font-light hover:opacity-60 transition-opacity py-1 w-full text-center"
                 style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
               >
                 {item.label}

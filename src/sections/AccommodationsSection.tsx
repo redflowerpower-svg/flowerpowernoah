@@ -33,7 +33,7 @@ const units = [
 
 export default function AccommodationsSection({ onNavigate }: Props) {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-xs tracking-[0.4em] uppercase text-amber-600 mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -52,7 +52,7 @@ export default function AccommodationsSection({ onNavigate }: Props) {
         </div>
 
         {/* Check-in info */}
-        <div className="flex flex-wrap justify-center gap-8 mb-14 p-6 bg-stone-50 border border-stone-100">
+        <div className="flex flex-wrap justify-center gap-5 md:gap-8 mb-10 md:mb-14 p-4 md:p-6 bg-stone-50 border border-stone-100">
           <div className="flex items-center gap-3">
             <Clock size={16} className="text-amber-600" />
             <div>
@@ -78,10 +78,11 @@ export default function AccommodationsSection({ onNavigate }: Props) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {units.map((unit, i) => (
             <div key={i} className="group overflow-hidden border border-stone-100 hover:border-amber-200 hover:shadow-xl transition-all duration-400">
-              <div className="relative h-56 overflow-hidden">
+              {/* Altezza fluida tramite aspect-ratio per non distorcere le immagini su mobile */}
+              <div className="relative aspect-[4/3] overflow-hidden">
                 <img
                   src={unit.image}
                   alt={unit.type}

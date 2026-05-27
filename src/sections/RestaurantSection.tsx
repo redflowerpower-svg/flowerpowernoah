@@ -31,10 +31,10 @@ const menu = [
 
 export default function RestaurantSection() {
   return (
-    <section className="py-24 bg-stone-50">
+    <section className="py-16 md:py-24 bg-stone-50">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center mb-16 lg:mb-20">
           <div>
             <p className="text-xs tracking-[0.4em] uppercase text-amber-600 mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>
               Authentic Italian Cuisine
@@ -60,12 +60,24 @@ export default function RestaurantSection() {
               </div>
             </div>
           </div>
-          <div className="relative">
+          {/* Contenitore immagini: su mobile layout verticale, su desktop overlay */}
+          <div className="relative mt-8 lg:mt-0">
             <img
               src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="Italian cuisine"
-              className="w-full h-72 object-cover"
+              className="w-full aspect-[4/3] object-cover"
             />
+            {/* Immagine secondaria: visibile su mobile sotto la principale, su lg in overlay */}
+            <div className="flex lg:hidden mt-3 gap-3">
+              <img
+                src="https://images.pexels.com/photos/905847/pexels-photo-905847.jpeg?auto=compress&cs=tinysrgb&w=400"
+                alt="Wood fired pizza"
+                className="w-1/3 aspect-square object-cover border-2 border-white shadow-md"
+              />
+              <p className="text-stone-400 text-xs leading-relaxed self-center italic">
+                Autentica pizza cotta nel forno a legna — una tradizione napoletana sull'isola di Koh Phayam.
+              </p>
+            </div>
             <img
               src="https://images.pexels.com/photos/905847/pexels-photo-905847.jpeg?auto=compress&cs=tinysrgb&w=400"
               alt="Wood fired pizza"
@@ -82,9 +94,9 @@ export default function RestaurantSection() {
           >
             Menu Highlights
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             {menu.map((cat, i) => (
-              <div key={i} className="bg-white p-8 border border-stone-100">
+              <div key={i} className="bg-white p-6 md:p-8 border border-stone-100">
                 <h4
                   className="text-amber-700 mb-5 pb-3 border-b border-stone-100"
                   style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: '1.1rem', fontWeight: 400, letterSpacing: '0.05em' }}

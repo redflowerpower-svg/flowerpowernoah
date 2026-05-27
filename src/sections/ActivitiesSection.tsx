@@ -28,7 +28,7 @@ const islandFacts = [
 
 export default function ActivitiesSection() {
   return (
-    <section className="py-24" style={{ background: '#faf9f7' }}>
+    <section className="py-16 md:py-24" style={{ background: '#faf9f7' }}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-xs tracking-[0.4em] uppercase text-amber-600 mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -46,10 +46,11 @@ export default function ActivitiesSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16">
           {activities.map((a, i) => (
             <div key={i} className="group overflow-hidden bg-white border border-stone-100 hover:shadow-xl transition-shadow duration-400">
-              <div className="relative h-60 overflow-hidden">
+              {/* Altezza fluida tramite aspect-ratio invece di h fissa */}
+          <div className="relative aspect-[4/3] overflow-hidden">
                 <img
                   src={a.image}
                   alt={a.title}
@@ -77,17 +78,17 @@ export default function ActivitiesSection() {
           ))}
         </div>
 
-        {/* Island quick facts */}
+        {/* Fatti rapidi sull'isola: font size ridotto su mobile per evitare overflow nella griglia 2 colonne */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-stone-200 border border-stone-200">
           {islandFacts.map((f, i) => (
-            <div key={i} className="bg-white p-7 text-center">
+            <div key={i} className="bg-white p-4 md:p-7 text-center">
               <p
                 className="text-stone-800 mb-1"
-                style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: '1.4rem', fontWeight: 400 }}
+                style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: 'clamp(1rem, 3vw, 1.4rem)', fontWeight: 400 }}
               >
                 {f.value}
               </p>
-              <p className="text-xs text-stone-400 uppercase tracking-wide">{f.label}</p>
+              <p className="text-xs text-stone-400 uppercase tracking-wide leading-snug">{f.label}</p>
             </div>
           ))}
         </div>

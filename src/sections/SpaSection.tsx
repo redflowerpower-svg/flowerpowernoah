@@ -29,7 +29,7 @@ const treatments = [
 
 export default function SpaSection() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-5">
           <p className="text-xs tracking-[0.4em] uppercase text-amber-600 mb-3" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -57,7 +57,8 @@ export default function SpaSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {treatments.map((t, i) => (
             <div key={i} className="group overflow-hidden border border-stone-100 hover:shadow-lg transition-shadow duration-400">
-              <div className="relative h-48 overflow-hidden">
+              {/* Aspect-ratio fluido per evitare distorsioni su schermi piccoli */}
+              <div className="relative aspect-[4/3] sm:aspect-square overflow-hidden">
                 <img
                   src={t.image}
                   alt={t.name}
@@ -81,7 +82,7 @@ export default function SpaSection() {
           ))}
         </div>
 
-        <div className="mt-12 p-8 bg-stone-50 border border-stone-100 text-center max-w-2xl mx-auto">
+        <div className="mt-10 md:mt-12 p-5 md:p-8 bg-stone-50 border border-stone-100 text-center max-w-2xl mx-auto">
           <p className="text-sm text-stone-600 leading-relaxed mb-5">
             Spa reservations are recommended in advance. Contact us directly to arrange your treatments alongside your stay.
           </p>
