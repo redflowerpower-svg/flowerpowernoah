@@ -1,43 +1,48 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 interface Props {
   onSelectVillage: () => void;
   onSelectPizza: () => void;
 }
 
-function TouchHint({ direction }: { direction: 'up' | 'down' }) {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      className="opacity-50"
-      style={{ transform: direction === 'up' ? 'rotate(180deg)' : 'none' }}
-    >
-      <path d="M4 7 L10 13 L16 7" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
   const [activePanel, setActivePanel] = useState<'none' | 'village' | 'pizza'>('none');
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect touch capability on first interaction
+  const handleTouchDetect = useCallback(() => {
+    setIsMobile(true);
+  }, []);
 
   const villageExpanded = activePanel === 'village';
   const pizzaExpanded = activePanel === 'pizza';
 
-  const villageFlex = villageExpanded ? '1.6' : pizzaExpanded ? '0.4' : '1';
-  const pizzaFlex = pizzaExpanded ? '1.6' : villageExpanded ? '0.4' : '1';
+  // Mobile uses more extreme ratios to give logo room to breathe
+  const expandRatio = isMobile ? '2.4' : '1.6';
+  const collapseRatio = isMobile ? '0.25' : '0.4';
 
-  const handleVillageTouch = () => {
+  const villageFlex = villageExpanded ? expandRatio : pizzaExpanded ? collapseRatio : '1';
+  const pizzaFlex = pizzaExpanded ? expandRatio : villageExpanded ? collapseRatio : '1';
+
+  // Desktop: click always navigates (hover already expanded the panel)
+  const handleVillageClick = () => {
+    if (!isMobile) onSelectVillage();
+  };
+  const handlePizzaClick = () => {
+    if (!isMobile) onSelectPizza();
+  };
+
+  // Mobile: first tap = expand, second tap = navigate
+  const handleVillageTouch = (e: React.TouchEvent) => {
+    e.preventDefault();
     if (activePanel === 'village') {
       onSelectVillage();
     } else {
       setActivePanel('village');
     }
   };
-
-  const handlePizzaTouch = () => {
+  const handlePizzaTouch = (e: React.TouchEvent) => {
+    e.preventDefault();
     if (activePanel === 'pizza') {
       onSelectPizza();
     } else {
@@ -46,22 +51,26 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
   };
 
   return (
-    <div className="fixed inset-0 flex flex-col md:flex-row overflow-hidden">
+    <div
+      className="fixed inset-0 flex flex-col md:flex-row overflow-hidden"
+      onTouchStart={handleTouchDetect}
+    >
 
       {/* ── Pannello Village ── */}
       <div
-        className="relative overflow-hidden cursor-pointer"
+        className="relative overflow-hidden"
         style={{
           flex: villageFlex,
           transition: 'flex 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
           backgroundColor: '#4a5a2e',
+          cursor: isMobile ? 'default' : 'pointer',
         }}
-        onMouseEnter={() => setActivePanel('village')}
-        onMouseLeave={() => setActivePanel('none')}
-        onClick={onSelectVillage}
-        onTouchStart={e => { e.preventDefault(); handleVillageTouch(); }}
+        onMouseEnter={() => { if (!isMobile) setActivePanel('village'); }}
+        onMouseLeave={() => { if (!isMobile) setActivePanel('none'); }}
+        onClick={handleVillageClick}
+        onTouchStart={handleVillageTouch}
       >
-        {/* Sfondo radiale per dare profondita */}
+        {/* Sfondo radiale */}
         <div
           className="absolute inset-0"
           style={{
@@ -69,7 +78,7 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
           }}
         />
 
-        {/* Logo come elemento visivo dominante */}
+        {/* Logo dominante centrato */}
         <div
           className="absolute inset-0 flex items-center justify-center"
           style={{
@@ -84,18 +93,19 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
               width: 'min(75%, 420px)',
               height: 'auto',
               objectFit: 'contain',
-              opacity: pizzaExpanded ? 0.4 : 0.92,
+              opacity: pizzaExpanded ? 0.25 : 0.92,
               transition: 'opacity 0.5s ease',
               filter: 'drop-shadow(0 8px 32px rgba(0,0,0,0.45))',
             }}
           />
         </div>
 
-        {/* CTA in basso */}
+        {/* CTA in basso — nascosto se l'altro pannello e espanso */}
         <div
           className="absolute bottom-0 left-0 right-0 flex flex-col items-center pb-8 md:pb-10"
           style={{
             opacity: pizzaExpanded ? 0 : 1,
+            pointerEvents: pizzaExpanded ? 'none' : 'auto',
             transition: 'opacity 0.4s ease',
             background: 'linear-gradient(to top, rgba(42,52,21,0.85) 0%, transparent 100%)',
             paddingTop: '48px',
@@ -107,41 +117,57 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
           >
             Koh Phayam · Thailand
           </p>
+
+          {/* Desktop CTA */}
           <button
-            className="px-7 py-2.5 border border-white text-white text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-stone-800 active:bg-white active:text-stone-800 transition-all duration-300"
+            className="hidden md:block px-7 py-2.5 border border-white text-white text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-stone-800 transition-all duration-300"
             style={{ fontFamily: 'Inter, sans-serif' }}
           >
             Explore Village
           </button>
-          {villageExpanded && (
-            <p className="mt-3 text-xs opacity-50 md:hidden" style={{ fontFamily: 'Inter, sans-serif', color: 'white' }}>
-              Tap again to enter
-            </p>
+
+          {/* Mobile CTA — pulsante prominente solo quando espanso */}
+          {villageExpanded && isMobile && (
+            <button
+              className="md:hidden px-10 py-3 bg-white text-stone-800 text-sm tracking-[0.2em] uppercase font-semibold shadow-lg"
+              style={{
+                fontFamily: 'Inter, sans-serif',
+                animation: 'pulse-cta 1.8s ease-in-out infinite',
+              }}
+            >
+              Tap to Enter
+            </button>
+          )}
+
+          {/* Bottone placeholder su mobile quando NON espanso */}
+          {!villageExpanded && isMobile && (
+            <button
+              className="md:hidden px-7 py-2.5 border border-white text-white text-xs tracking-[0.2em] uppercase"
+              style={{ fontFamily: 'Inter, sans-serif' }}
+            >
+              Explore Village
+            </button>
           )}
         </div>
 
-        {/* Etichetta verticale quando compresso — solo desktop */}
+        {/* Striscia verticale col nome quando compresso su desktop */}
         {pizzaExpanded && (
           <div className="absolute inset-0 items-center justify-center hidden md:flex">
             <span
               className="text-white text-sm tracking-[0.3em] uppercase"
-              style={{ writingMode: 'vertical-rl', fontFamily: 'Inter, sans-serif', fontWeight: 300, opacity: 0.7 }}
+              style={{ writingMode: 'vertical-rl', fontFamily: 'Inter, sans-serif', fontWeight: 300, opacity: 0.5 }}
             >
               Village & Spa
             </span>
           </div>
         )}
-
-        {/* Freccia direzionale su mobile quando compresso */}
-        {pizzaExpanded && (
-          <div className="absolute inset-0 flex items-center justify-center md:hidden">
-            <TouchHint direction="up" />
-          </div>
-        )}
       </div>
 
-      {/* ── Divisore (linea + cerchio) ── */}
-      <div className="relative z-10 flex items-center justify-center flex-shrink-0">
+      {/* ── Divisore ── */}
+      <div
+        className="relative z-10 flex items-center justify-center flex-shrink-0"
+        style={{ pointerEvents: 'none' }}
+      >
         <div
           className="hidden md:block absolute inset-y-0 left-1/2 -translate-x-1/2"
           style={{ width: '2px', background: 'rgba(255,255,255,0.35)' }}
@@ -159,16 +185,17 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
 
       {/* ── Pannello Pizza ── */}
       <div
-        className="relative overflow-hidden cursor-pointer"
+        className="relative overflow-hidden"
         style={{
           flex: pizzaFlex,
           transition: 'flex 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
           backgroundColor: '#2c2a24',
+          cursor: isMobile ? 'default' : 'pointer',
         }}
-        onMouseEnter={() => setActivePanel('pizza')}
-        onMouseLeave={() => setActivePanel('none')}
-        onClick={onSelectPizza}
-        onTouchStart={e => { e.preventDefault(); handlePizzaTouch(); }}
+        onMouseEnter={() => { if (!isMobile) setActivePanel('pizza'); }}
+        onMouseLeave={() => { if (!isMobile) setActivePanel('none'); }}
+        onClick={handlePizzaClick}
+        onTouchStart={handlePizzaTouch}
       >
         {/* Sfondo radiale */}
         <div
@@ -178,7 +205,7 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
           }}
         />
 
-        {/* Logo come elemento visivo dominante */}
+        {/* Logo dominante centrato */}
         <div
           className="absolute inset-0 flex items-center justify-center"
           style={{
@@ -193,7 +220,7 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
               width: 'min(75%, 420px)',
               height: 'auto',
               objectFit: 'contain',
-              opacity: villageExpanded ? 0.4 : 0.92,
+              opacity: villageExpanded ? 0.25 : 0.92,
               transition: 'opacity 0.5s ease',
               filter: 'drop-shadow(0 8px 32px rgba(0,0,0,0.5))',
             }}
@@ -205,6 +232,7 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
           className="absolute bottom-0 left-0 right-0 flex flex-col items-center pb-8 md:pb-10"
           style={{
             opacity: villageExpanded ? 0 : 1,
+            pointerEvents: villageExpanded ? 'none' : 'auto',
             transition: 'opacity 0.4s ease',
             background: 'linear-gradient(to top, rgba(26,24,16,0.85) 0%, transparent 100%)',
             paddingTop: '48px',
@@ -216,38 +244,59 @@ export default function SplitScreen({ onSelectVillage, onSelectPizza }: Props) {
           >
             Ranong · Thailand
           </p>
+
+          {/* Desktop CTA */}
           <button
-            className="px-7 py-2.5 border border-white text-white text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-stone-800 active:bg-white active:text-stone-800 transition-all duration-300"
+            className="hidden md:block px-7 py-2.5 border border-white text-white text-xs tracking-[0.2em] uppercase hover:bg-white hover:text-stone-800 transition-all duration-300"
             style={{ fontFamily: 'Inter, sans-serif' }}
           >
             See Our Menu
           </button>
-          {pizzaExpanded && (
-            <p className="mt-3 text-xs opacity-50 md:hidden" style={{ fontFamily: 'Inter, sans-serif', color: 'white' }}>
-              Tap again to enter
-            </p>
+
+          {/* Mobile CTA — pulsante prominente solo quando espanso */}
+          {pizzaExpanded && isMobile && (
+            <button
+              className="md:hidden px-10 py-3 bg-white text-stone-800 text-sm tracking-[0.2em] uppercase font-semibold shadow-lg"
+              style={{
+                fontFamily: 'Inter, sans-serif',
+                animation: 'pulse-cta 1.8s ease-in-out infinite',
+              }}
+            >
+              Tap to Enter
+            </button>
+          )}
+
+          {/* Bottone placeholder su mobile quando NON espanso */}
+          {!pizzaExpanded && isMobile && (
+            <button
+              className="md:hidden px-7 py-2.5 border border-white text-white text-xs tracking-[0.2em] uppercase"
+              style={{ fontFamily: 'Inter, sans-serif' }}
+            >
+              See Our Menu
+            </button>
           )}
         </div>
 
-        {/* Etichetta verticale quando compresso — solo desktop */}
+        {/* Striscia verticale col nome quando compresso su desktop */}
         {villageExpanded && (
           <div className="absolute inset-0 items-center justify-center hidden md:flex">
             <span
               className="text-white text-sm tracking-[0.3em] uppercase"
-              style={{ writingMode: 'vertical-rl', fontFamily: 'Inter, sans-serif', fontWeight: 300, opacity: 0.7 }}
+              style={{ writingMode: 'vertical-rl', fontFamily: 'Inter, sans-serif', fontWeight: 300, opacity: 0.5 }}
             >
               Pizza Ranong
             </span>
           </div>
         )}
-
-        {/* Freccia direzionale su mobile quando compresso */}
-        {villageExpanded && (
-          <div className="absolute inset-0 flex items-center justify-center md:hidden">
-            <TouchHint direction="down" />
-          </div>
-        )}
       </div>
+
+      {/* Keyframes per il pulsante "Tap to Enter" */}
+      <style>{`
+        @keyframes pulse-cta {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.75; transform: scale(0.97); }
+        }
+      `}</style>
     </div>
   );
 }
