@@ -122,7 +122,7 @@ export default function CheckoutFlow({ onClose, onSuccess }: Props) {
         items: savedItems,
         total,
         status: 'new',
-        payment_method: paymentMethod,
+       payment_method: paymentMethod || 'promptpay',
         receipt_url: receiptUrl,
         telegram_notified: false,
       };
