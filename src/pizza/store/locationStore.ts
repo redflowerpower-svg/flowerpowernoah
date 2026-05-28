@@ -16,6 +16,7 @@ interface LocationState {
 
   requestLocation: () => void;
   setMaxRadius: (radius: number) => void;
+  setSimulatedLocation: () => void;
 }
 
 export const useLocationStore = create<LocationState>((set, get) => ({
@@ -52,6 +53,15 @@ export const useLocationStore = create<LocationState>((set, get) => ({
         set({ error: 'Impossibile ottenere la posizione. Verifica i permessi.', isLoading: false });
       }
     );
+  },
+
+  setSimulatedLocation: () => {
+    set({
+      distanceKm: 1.5,
+      isDeliverable: true,
+      isLoading: false,
+      error: null,
+    });
   },
 
   setMaxRadius: (radius) => {

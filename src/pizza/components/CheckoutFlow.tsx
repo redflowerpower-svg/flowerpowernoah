@@ -52,7 +52,7 @@ async function sendTelegramNotification(order: PizzaOrder) {
 export default function CheckoutFlow({ onClose, onSuccess }: Props) {
   const { items, getTotal, clearCart } = useCartStore();
   const total = getTotal();
-  const { requestLocation, isLoading: locationLoading, distanceKm, isDeliverable, error: locationError } = useLocationStore();
+  const { requestLocation, setSimulatedLocation, isLoading: locationLoading, distanceKm, isDeliverable, error: locationError } = useLocationStore();
 
   const [step, setStep] = useState<Step>(1);
   const [name, setName] = useState('');
@@ -229,17 +229,35 @@ export default function CheckoutFlow({ onClose, onSuccess }: Props) {
                         </p>
                       )}
                       {distanceKm !== null && !isDeliverable && (
-                        <div className="flex items-start gap-2 p-3 border border-red-800 bg-red-900 bg-opacity-20">
-                          <AlertCircle size={15} className="text-red-400 flex-shrink-0 mt-0.5" />
-                          <p className="text-red-400 text-xs leading-relaxed">
-                            Ci dispiace, la tua posizione è fuori dalla nostra area di copertura di consegna.
-                          </p>
+                        <div className="space-y-2">
+                          <div className="flex items-start gap-2 p-3 border border-red-800 bg-red-900 bg-opacity-20">
+                            <AlertCircle size={15} className="text-red-400 flex-shrink-0 mt-0.5" />
+                            <p className="text-red-400 text-xs leading-relaxed">
+                              Ci dispiace, la tua posizione è fuori dalla nostra area di copertura di consegna.
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={setSimulatedLocation}
+                            className="w-full py-2 text-xs text-stone-500 hover:text-stone-300 transition-colors underline underline-offset-2"
+                          >
+                            Simula posizione (Test)
+                          </button>
                         </div>
                       )}
                       {locationError && distanceKm === null && (
-                        <div className="flex items-start gap-2 p-3 border border-red-800 bg-red-900 bg-opacity-20">
-                          <AlertCircle size={15} className="text-red-400 flex-shrink-0 mt-0.5" />
-                          <p className="text-red-400 text-xs">{locationError}</p>
+                        <div className="space-y-2">
+                          <div className="flex items-start gap-2 p-3 border border-red-800 bg-red-900 bg-opacity-20">
+                            <AlertCircle size={15} className="text-red-400 flex-shrink-0 mt-0.5" />
+                            <p className="text-red-400 text-xs">{locationError}</p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={setSimulatedLocation}
+                            className="w-full py-2 text-xs text-stone-500 hover:text-stone-300 transition-colors underline underline-offset-2"
+                          >
+                            Simula posizione (Test)
+                          </button>
                         </div>
                       )}
                     </div>
