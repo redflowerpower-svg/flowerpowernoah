@@ -20,16 +20,15 @@ export default function CartDrawer({ onCheckout }: Props) {
       )}
 
       <div
-        className="fixed top-0 right-0 h-full z-50 flex flex-col"
+        className="fixed top-0 right-0 h-full z-50 flex flex-col w-full max-w-[420px]"
         style={{
-          width: 'min(100vw, 420px)',
           background: '#1c1917',
           borderLeft: '1px solid rgba(255,255,255,0.08)',
           transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
           transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1)',
         }}
       >
-        <div className="flex items-center justify-between px-6 py-5 border-b border-stone-800">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-5 border-b border-stone-800">
           <div className="flex items-center gap-2">
             <ShoppingBag size={18} className="text-red-500" />
             <span className="text-white text-sm tracking-widest uppercase" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -46,7 +45,7 @@ export default function CartDrawer({ onCheckout }: Props) {
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+        <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4">
           {items.length === 0 ? (
             <div className="text-center py-20">
               <ShoppingBag size={36} className="text-stone-700 mx-auto mb-4" />
@@ -117,12 +116,12 @@ export default function CartDrawer({ onCheckout }: Props) {
         </div>
 
         {items.length > 0 && (
-          <div className="border-t border-stone-800 p-6 space-y-4">
-            <div className="flex justify-between items-center">
-              <span className="text-stone-400 text-xs uppercase tracking-widest" style={{ fontFamily: 'Inter, sans-serif' }}>
+          <div className="border-t border-stone-800 px-4 sm:px-6 py-5 space-y-4">
+            <div className="flex justify-between items-center gap-2">
+              <span className="text-stone-400 text-xs uppercase tracking-widest flex-shrink-0" style={{ fontFamily: 'Inter, sans-serif' }}>
                 Total
               </span>
-              <span className="text-white text-xl font-light" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}>
+              <span className="text-white text-lg font-light text-right" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}>
                 {total} ฿
               </span>
             </div>
