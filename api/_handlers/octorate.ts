@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
+import { checkAndSyncCascadeLastMinute } from "../_helpers/octorate-cascade-sync.js";
 
 function getSupabaseAdmin() {
   let url = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || "https://gjqevgkbjkharczhikcl.supabase.co";
@@ -359,6 +360,11 @@ export async function handleOctorateBookings(req: VercelRequest, res: VercelResp
 
     let octorateReservations: any[] = [];
     if (tokenData?.access_token) {
+      // ⚡ [CASCADE LAST-MINUTE 24/7] Auto-Roll: verifica e allinea la finestra 7gg sconti a cascata su Octorate
+      checkAndSyncCascadeLastMinute(tokenData.access_token, supabaseAdmin).catch(err => {
+        console.warn('[octorate-bookings] Cascade sync non-fatal warning:', err);
+      });
+
       try {
         const pageSize = 20;
         let page = 0;

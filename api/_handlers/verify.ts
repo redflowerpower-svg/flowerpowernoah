@@ -2,6 +2,7 @@ import { VercelRequest, VercelResponse } from "@vercel/node";
 import { stripe } from "../_helpers/stripe.js";
 import { createClient } from "@supabase/supabase-js";
 import { generateConfirmationPDF, sendConfirmationEmail } from "../_helpers/booking-confirmation.js";
+import { executeAutoShieldForReservation } from "../_helpers/octorate-auto-shield.js";
 import * as https from "https";
 
 // Robust HTTP POST using Node built-in https — avoids global fetch() issues in vercel dev on Windows
@@ -342,6 +343,24 @@ export async function handleVerifyCheckoutSession(req: VercelRequest, res: Verce
               }
             } catch (payErr: any) {
               console.error(`[Verify API] Error registering Octorate payment:`, payErr);
+            }
+
+            // 🛡️ Post-Booking Auto-Shield: Sigilla istantaneamente tutte le tariffe derivate per questo alloggio e date
+            try {
+              console.log(`[Verify API] Triggering Auto-Shield for reservation ${octorateReservationId} (${accommodationId})...`);
+              await executeAutoShieldForReservation({
+                accessToken: currentToken,
+                checkIn,
+                checkOut,
+                roomName: session.metadata?.accommodationName || session.metadata?.roomName || '',
+                productId: accommodationId,
+                reservationId: octorateReservationId,
+                guestName,
+                channelName: 'Sito Web Diretto (Stripe)',
+                supabaseAdmin: supabase
+              });
+            } catch (shieldErr) {
+              console.warn('[Verify API] Auto-Shield non-fatal warning:', shieldErr);
             }
           }
         } else {

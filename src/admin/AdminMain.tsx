@@ -44,8 +44,8 @@ export function AdminMain() {
             onLogout={handleLogout}
           />
 
-          {/* Main Content Area */}
-          <main className="flex-1 p-4 sm:p-6 max-w-7xl mx-auto w-full">
+          {/* Main Content Area - Full width responsive for all monitors and smartphones */}
+          <main className="flex-1 px-2.5 sm:px-4 md:px-6 py-4 sm:py-6 w-full max-w-none">
             {activeDept === 'gateway' && (
               <AdminGateway onSelectDepartment={(dept) => handleSelectDept(dept)} />
             )}

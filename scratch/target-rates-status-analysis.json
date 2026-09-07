@@ -1,0 +1,622 @@
+{
+  "openList": [
+    {
+      "id": 496022,
+      "name": "JVL AC bnb-7d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1890
+    },
+    {
+      "id": 496021,
+      "name": "JVR AC bnb-7d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1890
+    },
+    {
+      "id": 496031,
+      "name": "JVL AC bnb-14d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1890
+    },
+    {
+      "id": 496030,
+      "name": "JVR AC bnb-14d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1890
+    },
+    {
+      "id": 496057,
+      "name": "JVL AirBnB AC",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1690
+    },
+    {
+      "id": 496056,
+      "name": "JVR AirBnB AC",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1690
+    },
+    {
+      "id": 916838,
+      "name": "Inter AC bnb-14d ",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1030
+    },
+    {
+      "id": 916840,
+      "name": "Inter AC bnb-7d ",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1030
+    },
+    {
+      "id": 495979,
+      "name": "JVR AC14d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1690
+    },
+    {
+      "id": 495978,
+      "name": "JVR AC7d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1690
+    },
+    {
+      "id": 421530,
+      "name": "Pent AC bnb-14d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 2290
+    },
+    {
+      "id": 421527,
+      "name": "Pent AC14d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 2090
+    },
+    {
+      "id": 421533,
+      "name": "Pent AirBnB AC",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 2090
+    },
+    {
+      "id": 495552,
+      "name": "P&L AC7d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1690
+    },
+    {
+      "id": 495806,
+      "name": "JVL AC14d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1690
+    },
+    {
+      "id": 495805,
+      "name": "JVL AC7d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1690
+    },
+    {
+      "id": 495565,
+      "name": "P&L AC14d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1690
+    },
+    {
+      "id": 495587,
+      "name": "P&L AC bnb-7d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1890
+    },
+    {
+      "id": 495593,
+      "name": "P&L AC bnb-14d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1890
+    },
+    {
+      "id": 421998,
+      "name": "Inter AC14d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 830
+    },
+    {
+      "id": 495609,
+      "name": "P&L AirBnB AC",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1690
+    },
+    {
+      "id": 422147,
+      "name": "Inter AirBnB AC",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 830
+    },
+    {
+      "id": 421522,
+      "name": "Pent AC7d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 2090
+    },
+    {
+      "id": 340367,
+      "name": "Inter AC7d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 830
+    },
+    {
+      "id": 332057,
+      "name": "Yellow AC bnb-7d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1590
+    },
+    {
+      "id": 332060,
+      "name": "Yellow AC bnb-14d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1590
+    },
+    {
+      "id": 421525,
+      "name": "Pent AC bnb-7d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 2290
+    },
+    {
+      "id": 332074,
+      "name": "Green AC bnb-14d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1390
+    },
+    {
+      "id": 332072,
+      "name": "Green AC bnb-7d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1390
+    },
+    {
+      "id": 340196,
+      "name": "Red AirBnB AC",
+      "stopSells": false,
+      "bookable": false,
+      "availability": 0,
+      "price": 1190
+    },
+    {
+      "id": 340198,
+      "name": "Yellow AirBnB AC",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1390
+    },
+    {
+      "id": 340200,
+      "name": "Green AirBnB AC",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1190
+    },
+    {
+      "id": 421507,
+      "name": "R3 AirBnB AC",
+      "stopSells": false,
+      "bookable": false,
+      "availability": 0,
+      "price": 10400
+    },
+    {
+      "id": 421508,
+      "name": "R4 AirBnB AC",
+      "stopSells": false,
+      "bookable": false,
+      "availability": 0,
+      "price": 10400
+    },
+    {
+      "id": 421505,
+      "name": "R1 AirBnB AC",
+      "stopSells": false,
+      "bookable": false,
+      "availability": 0,
+      "price": 10400
+    },
+    {
+      "id": 421506,
+      "name": "R2 AirBnB AC",
+      "stopSells": false,
+      "bookable": false,
+      "availability": 0,
+      "price": 10400
+    },
+    {
+      "id": 421509,
+      "name": "R5 AirBnB AC",
+      "stopSells": false,
+      "bookable": false,
+      "availability": 0,
+      "price": 10400
+    },
+    {
+      "id": 331922,
+      "name": "Yellow AC14d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1390
+    },
+    {
+      "id": 331921,
+      "name": "Yellow AC7d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1390
+    },
+    {
+      "id": 331924,
+      "name": "Green AC14d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1190
+    },
+    {
+      "id": 330964,
+      "name": "Red AC7d",
+      "stopSells": false,
+      "bookable": false,
+      "availability": 0,
+      "price": 1190
+    },
+    {
+      "id": 331923,
+      "name": "Green AC7d",
+      "stopSells": false,
+      "bookable": true,
+      "availability": 1,
+      "price": 1190
+    },
+    {
+      "id": 330970,
+      "name": "Red AC14d",
+      "stopSells": false,
+      "bookable": false,
+      "availability": 0,
+      "price": 1190
+    },
+    {
+      "id": 332036,
+      "name": "Red AC bnb-14d",
+      "stopSells": false,
+      "bookable": false,
+      "availability": 0,
+      "price": 1390
+    },
+    {
+      "id": 332035,
+      "name": "Red AC bnb-7d",
+      "stopSells": false,
+      "bookable": false,
+      "availability": 0,
+      "price": 1390
+    }
+  ],
+  "closedList": [
+    {
+      "id": 529813,
+      "name": "JV AirBnB AC",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 1,
+      "price": 3090
+    },
+    {
+      "id": 916114,
+      "name": "Lodge 2 AC7d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10500
+    },
+    {
+      "id": 916402,
+      "name": "R1 AC bnb-14d ",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10600
+    },
+    {
+      "id": 916818,
+      "name": "R1 AC bnb-7d ",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10600
+    },
+    {
+      "id": 916816,
+      "name": "JV AC bnb-7d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 1,
+      "price": 3290
+    },
+    {
+      "id": 916830,
+      "name": "Lodge 2 AC bnb-14d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10700
+    },
+    {
+      "id": 916829,
+      "name": "Lodge 2 AC bnb-7d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10700
+    },
+    {
+      "id": 529781,
+      "name": "JV AC14d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 1,
+      "price": 3090
+    },
+    {
+      "id": 529780,
+      "name": "JV AC7d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 1,
+      "price": 3090
+    },
+    {
+      "id": 916105,
+      "name": "Lodge 2 AC14d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10500
+    },
+    {
+      "id": 529801,
+      "name": "JV AC bnb-14d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 1,
+      "price": 3290
+    },
+    {
+      "id": 422157,
+      "name": "Lodge 1 AC14d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10400
+    },
+    {
+      "id": 332121,
+      "name": "R3 AC bnb-7d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10600
+    },
+    {
+      "id": 332123,
+      "name": "R4 AC bnb-7d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10600
+    },
+    {
+      "id": 332119,
+      "name": "R2 AC bnb-7d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10600
+    },
+    {
+      "id": 332125,
+      "name": "R5 AC bnb-7d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10600
+    },
+    {
+      "id": 332138,
+      "name": "R4 AC bnb-14d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10600
+    },
+    {
+      "id": 332140,
+      "name": "R5 AC bnb-14d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10600
+    },
+    {
+      "id": 332134,
+      "name": "R2 AC bnb-14d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10600
+    },
+    {
+      "id": 332136,
+      "name": "R3 AC bnb-14d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10600
+    },
+    {
+      "id": 332142,
+      "name": "Lodge 1 AC bnb-14d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10600
+    },
+    {
+      "id": 331970,
+      "name": "R4 AC7d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10400
+    },
+    {
+      "id": 331969,
+      "name": "R3 AC14d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10400
+    },
+    {
+      "id": 331972,
+      "name": "R5 AC7d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10400
+    },
+    {
+      "id": 331971,
+      "name": "R4 AC14d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10400
+    },
+    {
+      "id": 331966,
+      "name": "R2 AC7d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10400
+    },
+    {
+      "id": 331968,
+      "name": "R3 AC7d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10400
+    },
+    {
+      "id": 331967,
+      "name": "R2 AC14d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10400
+    },
+    {
+      "id": 331977,
+      "name": "R1 AC14d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10400
+    },
+    {
+      "id": 331974,
+      "name": "Lodge 1 AC7d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10500
+    },
+    {
+      "id": 331973,
+      "name": "R5 AC14d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10400
+    },
+    {
+      "id": 331976,
+      "name": "R1 AC7d",
+      "stopSells": true,
+      "bookable": false,
+      "availability": 0,
+      "price": 10400
+    }
+  ]
+}

@@ -921,14 +921,55 @@ export const useRestrictionsStore = create<RestrictionsStoreState>()(
       syncPlanToOctorate: async (planId: string, periodId?: string, options?: { testOnly?: boolean }) => {
         const state = get();
         const disabledPlans = state.disabledRatePlans || [];
+        const isTestOnly = Boolean(options?.testOnly || state.liveViewMode === 'test');
+
         if (disabledPlans.includes(planId)) {
-          console.info(`[syncPlanToOctorate] Tariffa ${planId} disattivata dall'utente. Sincronizzazione saltata.`);
-          set({ lastSyncMessage: `⚠️ Tariffa ${planId} disattivata dall'utente: sincronizzazione saltata.`, lastSyncStatus: 'idle', isSaving: false });
-          return false;
+          console.info(`[syncPlanToOctorate] Tariffa ${planId} disattivata dall'utente. Invio chiusura di sicurezza (Stop Sell)...`);
+          set({
+            isSaving: true,
+            syncingPeriodId: periodId || null,
+            lastSyncMessage: `🔒 Chiusura di sicurezza (Stop Sell) per tariffa disattivata ${planId}${isTestOnly ? ' (TEST)' : ''}...`,
+            lastSyncStatus: 'idle'
+          });
+
+          const todayStr = new Date().toISOString().slice(0, 10);
+          const disabledClosePayload = {
+            planId,
+            ratePlanKey: planId,
+            dateFrom: todayStr,
+            dateTo: state.tabulaRasaDateTo || '2027-10-31',
+            stopSell: true,
+            strategy: 'stopsell',
+            testOnly: isTestOnly
+          };
+
+          try {
+            await fetch('/api/update-rateplan-restrictions-bulk', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(disabledClosePayload)
+            });
+            set({
+              isSaving: false,
+              syncingPeriodId: null,
+              lastSyncMessage: `✅ Tariffa ${planId} disattivata: blocco Stop Sell applicato con successo su Octorate!`,
+              lastSyncStatus: 'success'
+            });
+            return true;
+          } catch (e) {
+            console.error('[syncPlanToOctorate disabled plan error]:', e);
+            set({
+              isSaving: false,
+              syncingPeriodId: null,
+              lastSyncMessage: `❌ Errore durante la chiusura di ${planId}`,
+              lastSyncStatus: 'error'
+            });
+            return false;
+          }
         }
 
-        const isTestOnly = Boolean(options?.testOnly || state.liveViewMode === 'test');
         set({ isSaving: true, syncingPeriodId: periodId || null, lastSyncMessage: `🧹 Tabula Rasa: pulizia preventiva stagionale per ${planId}${isTestOnly ? ' (TEST)' : ''}...`, lastSyncStatus: 'idle' });
+
 
         try {
           // 🧹 TABULA RASA: Reset preventivo stagionale (01/10/2026 -> 31/10/2027)
@@ -1035,11 +1076,12 @@ export const useRestrictionsStore = create<RestrictionsStoreState>()(
             
             if ((get().disabledRatePlans || []).includes(plan.id)) {
               console.info(`[syncAllRatePlansToOctorate] Piano ${plan.name} (${plan.id}) disattivato dall'utente. Invio chiusura stagionale (Stop Sell)...`);
+              const todayStr = new Date().toISOString().slice(0, 10);
               const disabledClosePayload = {
                 planId: plan.id,
                 ratePlanKey: plan.id,
-                dateFrom: '2026-10-01',
-                dateTo: '2027-10-31',
+                dateFrom: todayStr < '2026-09-01' ? todayStr : '2026-09-01',
+                dateTo: state.tabulaRasaDateTo || '2027-10-31',
                 stopSell: true,
                 strategy: 'stopsell',
                 testOnly: isTestOnly
@@ -1051,6 +1093,7 @@ export const useRestrictionsStore = create<RestrictionsStoreState>()(
               }).catch(e => console.warn('[Disabled Plan Close warning]:', e));
               continue;
             }
+
 
             // 🧹 TABULA RASA BULK: Reset preventivo stagionale per ogni piano prima delle riaperture
             // BE = open di default (tariffa madre), tutti gli altri canali derivati = stopsell

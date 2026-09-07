@@ -1,0 +1,1040 @@
+[
+  {
+    "name": "Jungle Villa",
+    "motherId": 529773,
+    "found": true,
+    "base": 2290,
+    "days": [
+      {
+        "date": "2026-09-05",
+        "price": 2290,
+        "isDiscounted": false,
+        "expectedStage1": 2061,
+        "expectedStage2": 2176,
+        "expectedStage3": 2233
+      },
+      {
+        "date": "2026-09-06",
+        "price": 2290,
+        "isDiscounted": false,
+        "expectedStage1": 2061,
+        "expectedStage2": 2176,
+        "expectedStage3": 2233
+      },
+      {
+        "date": "2026-09-07",
+        "price": 2290,
+        "isDiscounted": false,
+        "expectedStage1": 2061,
+        "expectedStage2": 2176,
+        "expectedStage3": 2233
+      },
+      {
+        "date": "2026-09-08",
+        "price": 2290,
+        "isDiscounted": false,
+        "expectedStage1": 2061,
+        "expectedStage2": 2176,
+        "expectedStage3": 2233
+      },
+      {
+        "date": "2026-09-09",
+        "price": 2290,
+        "isDiscounted": false,
+        "expectedStage1": 2061,
+        "expectedStage2": 2176,
+        "expectedStage3": 2233
+      },
+      {
+        "date": "2026-09-10",
+        "price": 2290,
+        "isDiscounted": false,
+        "expectedStage1": 2061,
+        "expectedStage2": 2176,
+        "expectedStage3": 2233
+      },
+      {
+        "date": "2026-09-11",
+        "price": 2290,
+        "isDiscounted": false,
+        "expectedStage1": 2061,
+        "expectedStage2": 2176,
+        "expectedStage3": 2233
+      },
+      {
+        "date": "2026-09-12",
+        "price": 2290,
+        "isDiscounted": false,
+        "expectedStage1": 2061,
+        "expectedStage2": 2176,
+        "expectedStage3": 2233
+      }
+    ]
+  },
+  {
+    "name": "Jungle Villa Left",
+    "motherId": 495795,
+    "found": true,
+    "base": 1290,
+    "days": [
+      {
+        "date": "2026-09-05",
+        "price": 1290,
+        "isDiscounted": false,
+        "expectedStage1": 1161,
+        "expectedStage2": 1226,
+        "expectedStage3": 1258
+      },
+      {
+        "date": "2026-09-06",
+        "price": 1290,
+        "isDiscounted": false,
+        "expectedStage1": 1161,
+        "expectedStage2": 1226,
+        "expectedStage3": 1258
+      },
+      {
+        "date": "2026-09-07",
+        "price": 1290,
+        "isDiscounted": false,
+        "expectedStage1": 1161,
+        "expectedStage2": 1226,
+        "expectedStage3": 1258
+      },
+      {
+        "date": "2026-09-08",
+        "price": 1290,
+        "isDiscounted": false,
+        "expectedStage1": 1161,
+        "expectedStage2": 1226,
+        "expectedStage3": 1258
+      },
+      {
+        "date": "2026-09-09",
+        "price": 1290,
+        "isDiscounted": false,
+        "expectedStage1": 1161,
+        "expectedStage2": 1226,
+        "expectedStage3": 1258
+      },
+      {
+        "date": "2026-09-10",
+        "price": 1290,
+        "isDiscounted": false,
+        "expectedStage1": 1161,
+        "expectedStage2": 1226,
+        "expectedStage3": 1258
+      },
+      {
+        "date": "2026-09-11",
+        "price": 1290,
+        "isDiscounted": false,
+        "expectedStage1": 1161,
+        "expectedStage2": 1226,
+        "expectedStage3": 1258
+      },
+      {
+        "date": "2026-09-12",
+        "price": 1290,
+        "isDiscounted": false,
+        "expectedStage1": 1161,
+        "expectedStage2": 1226,
+        "expectedStage3": 1258
+      }
+    ]
+  },
+  {
+    "name": "Jungle Villa Right",
+    "motherId": 495796,
+    "found": true,
+    "base": 1290,
+    "days": [
+      {
+        "date": "2026-09-05",
+        "price": 1290,
+        "isDiscounted": false,
+        "expectedStage1": 1161,
+        "expectedStage2": 1226,
+        "expectedStage3": 1258
+      },
+      {
+        "date": "2026-09-06",
+        "price": 1290,
+        "isDiscounted": false,
+        "expectedStage1": 1161,
+        "expectedStage2": 1226,
+        "expectedStage3": 1258
+      },
+      {
+        "date": "2026-09-07",
+        "price": 1290,
+        "isDiscounted": false,
+        "expectedStage1": 1161,
+        "expectedStage2": 1226,
+        "expectedStage3": 1258
+      },
+      {
+        "date": "2026-09-08",
+        "price": 1290,
+        "isDiscounted": false,
+        "expectedStage1": 1161,
+        "expectedStage2": 1226,
+        "expectedStage3": 1258
+      },
+      {
+        "date": "2026-09-09",
+        "price": 1290,
+        "isDiscounted": false,
+        "expectedStage1": 1161,
+        "expectedStage2": 1226,
+        "expectedStage3": 1258
+      },
+      {
+        "date": "2026-09-10",
+        "price": 1290,
+        "isDiscounted": false,
+        "expectedStage1": 1161,
+        "expectedStage2": 1226,
+        "expectedStage3": 1258
+      },
+      {
+        "date": "2026-09-11",
+        "price": 1290,
+        "isDiscounted": false,
+        "expectedStage1": 1161,
+        "expectedStage2": 1226,
+        "expectedStage3": 1258
+      },
+      {
+        "date": "2026-09-12",
+        "price": 1290,
+        "isDiscounted": false,
+        "expectedStage1": 1161,
+        "expectedStage2": 1226,
+        "expectedStage3": 1258
+      }
+    ]
+  },
+  {
+    "name": "Peace & Love Villa",
+    "motherId": 494840,
+    "found": true,
+    "base": 1298,
+    "days": [
+      {
+        "date": "2026-09-05",
+        "price": 1290,
+        "isDiscounted": true,
+        "expectedStage1": 1168,
+        "expectedStage2": 1233,
+        "expectedStage3": 1266
+      },
+      {
+        "date": "2026-09-06",
+        "price": 1290,
+        "isDiscounted": true,
+        "expectedStage1": 1168,
+        "expectedStage2": 1233,
+        "expectedStage3": 1266
+      },
+      {
+        "date": "2026-09-07",
+        "price": 1290,
+        "isDiscounted": true,
+        "expectedStage1": 1168,
+        "expectedStage2": 1233,
+        "expectedStage3": 1266
+      },
+      {
+        "date": "2026-09-08",
+        "price": 1290,
+        "isDiscounted": true,
+        "expectedStage1": 1168,
+        "expectedStage2": 1233,
+        "expectedStage3": 1266
+      },
+      {
+        "date": "2026-09-09",
+        "price": 1290,
+        "isDiscounted": true,
+        "expectedStage1": 1168,
+        "expectedStage2": 1233,
+        "expectedStage3": 1266
+      },
+      {
+        "date": "2026-09-10",
+        "price": 1290,
+        "isDiscounted": true,
+        "expectedStage1": 1168,
+        "expectedStage2": 1233,
+        "expectedStage3": 1266
+      },
+      {
+        "date": "2026-09-11",
+        "price": 1290,
+        "isDiscounted": true,
+        "expectedStage1": 1168,
+        "expectedStage2": 1233,
+        "expectedStage3": 1266
+      },
+      {
+        "date": "2026-09-12",
+        "price": 1290,
+        "isDiscounted": true,
+        "expectedStage1": 1168,
+        "expectedStage2": 1233,
+        "expectedStage3": 1266
+      }
+    ]
+  },
+  {
+    "name": "Villa Penthouse",
+    "motherId": 421511,
+    "found": true,
+    "base": 1298,
+    "days": [
+      {
+        "date": "2026-09-05",
+        "price": 1290,
+        "isDiscounted": true,
+        "expectedStage1": 1168,
+        "expectedStage2": 1233,
+        "expectedStage3": 1266
+      },
+      {
+        "date": "2026-09-06",
+        "price": 1290,
+        "isDiscounted": true,
+        "expectedStage1": 1168,
+        "expectedStage2": 1233,
+        "expectedStage3": 1266
+      },
+      {
+        "date": "2026-09-07",
+        "price": 1290,
+        "isDiscounted": true,
+        "expectedStage1": 1168,
+        "expectedStage2": 1233,
+        "expectedStage3": 1266
+      },
+      {
+        "date": "2026-09-08",
+        "price": 1290,
+        "isDiscounted": true,
+        "expectedStage1": 1168,
+        "expectedStage2": 1233,
+        "expectedStage3": 1266
+      },
+      {
+        "date": "2026-09-09",
+        "price": 1290,
+        "isDiscounted": true,
+        "expectedStage1": 1168,
+        "expectedStage2": 1233,
+        "expectedStage3": 1266
+      },
+      {
+        "date": "2026-09-10",
+        "price": 1290,
+        "isDiscounted": true,
+        "expectedStage1": 1168,
+        "expectedStage2": 1233,
+        "expectedStage3": 1266
+      },
+      {
+        "date": "2026-09-11",
+        "price": 1290,
+        "isDiscounted": true,
+        "expectedStage1": 1168,
+        "expectedStage2": 1233,
+        "expectedStage3": 1266
+      },
+      {
+        "date": "2026-09-12",
+        "price": 1290,
+        "isDiscounted": true,
+        "expectedStage1": 1168,
+        "expectedStage2": 1233,
+        "expectedStage3": 1266
+      }
+    ]
+  },
+  {
+    "name": "Yellow Bungalow",
+    "motherId": 293957,
+    "found": true,
+    "base": 990,
+    "days": [
+      {
+        "date": "2026-09-05",
+        "price": 990,
+        "isDiscounted": false,
+        "expectedStage1": 891,
+        "expectedStage2": 941,
+        "expectedStage3": 965
+      },
+      {
+        "date": "2026-09-06",
+        "price": 990,
+        "isDiscounted": false,
+        "expectedStage1": 891,
+        "expectedStage2": 941,
+        "expectedStage3": 965
+      },
+      {
+        "date": "2026-09-07",
+        "price": 990,
+        "isDiscounted": false,
+        "expectedStage1": 891,
+        "expectedStage2": 941,
+        "expectedStage3": 965
+      },
+      {
+        "date": "2026-09-08",
+        "price": 990,
+        "isDiscounted": false,
+        "expectedStage1": 891,
+        "expectedStage2": 941,
+        "expectedStage3": 965
+      },
+      {
+        "date": "2026-09-09",
+        "price": 990,
+        "isDiscounted": false,
+        "expectedStage1": 891,
+        "expectedStage2": 941,
+        "expectedStage3": 965
+      },
+      {
+        "date": "2026-09-10",
+        "price": 990,
+        "isDiscounted": false,
+        "expectedStage1": 891,
+        "expectedStage2": 941,
+        "expectedStage3": 965
+      },
+      {
+        "date": "2026-09-11",
+        "price": 990,
+        "isDiscounted": false,
+        "expectedStage1": 891,
+        "expectedStage2": 941,
+        "expectedStage3": 965
+      },
+      {
+        "date": "2026-09-12",
+        "price": 990,
+        "isDiscounted": false,
+        "expectedStage1": 891,
+        "expectedStage2": 941,
+        "expectedStage3": 965
+      }
+    ]
+  },
+  {
+    "name": "Red Bungalow",
+    "motherId": 293954,
+    "found": false
+  },
+  {
+    "name": "Green Bungalow",
+    "motherId": 293962,
+    "found": true,
+    "base": 798,
+    "days": [
+      {
+        "date": "2026-09-05",
+        "price": 790,
+        "isDiscounted": true,
+        "expectedStage1": 718,
+        "expectedStage2": 758,
+        "expectedStage3": 778
+      },
+      {
+        "date": "2026-09-06",
+        "price": 790,
+        "isDiscounted": true,
+        "expectedStage1": 718,
+        "expectedStage2": 758,
+        "expectedStage3": 778
+      },
+      {
+        "date": "2026-09-07",
+        "price": 790,
+        "isDiscounted": true,
+        "expectedStage1": 718,
+        "expectedStage2": 758,
+        "expectedStage3": 778
+      },
+      {
+        "date": "2026-09-08",
+        "price": 790,
+        "isDiscounted": true,
+        "expectedStage1": 718,
+        "expectedStage2": 758,
+        "expectedStage3": 778
+      },
+      {
+        "date": "2026-09-09",
+        "price": 790,
+        "isDiscounted": true,
+        "expectedStage1": 718,
+        "expectedStage2": 758,
+        "expectedStage3": 778
+      },
+      {
+        "date": "2026-09-10",
+        "price": 790,
+        "isDiscounted": true,
+        "expectedStage1": 718,
+        "expectedStage2": 758,
+        "expectedStage3": 778
+      },
+      {
+        "date": "2026-09-11",
+        "price": 790,
+        "isDiscounted": true,
+        "expectedStage1": 718,
+        "expectedStage2": 758,
+        "expectedStage3": 778
+      },
+      {
+        "date": "2026-09-12",
+        "price": 790,
+        "isDiscounted": true,
+        "expectedStage1": 718,
+        "expectedStage2": 758,
+        "expectedStage3": 778
+      }
+    ]
+  },
+  {
+    "name": "Camel Tent",
+    "motherId": 293965,
+    "found": true,
+    "base": 430,
+    "days": [
+      {
+        "date": "2026-09-05",
+        "price": 430,
+        "isDiscounted": false,
+        "expectedStage1": 387,
+        "expectedStage2": 409,
+        "expectedStage3": 419
+      },
+      {
+        "date": "2026-09-06",
+        "price": 430,
+        "isDiscounted": false,
+        "expectedStage1": 387,
+        "expectedStage2": 409,
+        "expectedStage3": 419
+      },
+      {
+        "date": "2026-09-07",
+        "price": 430,
+        "isDiscounted": false,
+        "expectedStage1": 387,
+        "expectedStage2": 409,
+        "expectedStage3": 419
+      },
+      {
+        "date": "2026-09-08",
+        "price": 430,
+        "isDiscounted": false,
+        "expectedStage1": 387,
+        "expectedStage2": 409,
+        "expectedStage3": 419
+      },
+      {
+        "date": "2026-09-09",
+        "price": 430,
+        "isDiscounted": false,
+        "expectedStage1": 387,
+        "expectedStage2": 409,
+        "expectedStage3": 419
+      },
+      {
+        "date": "2026-09-10",
+        "price": 430,
+        "isDiscounted": false,
+        "expectedStage1": 387,
+        "expectedStage2": 409,
+        "expectedStage3": 419
+      },
+      {
+        "date": "2026-09-11",
+        "price": 430,
+        "isDiscounted": false,
+        "expectedStage1": 387,
+        "expectedStage2": 409,
+        "expectedStage3": 419
+      },
+      {
+        "date": "2026-09-12",
+        "price": 430,
+        "isDiscounted": false,
+        "expectedStage1": 387,
+        "expectedStage2": 409,
+        "expectedStage3": 419
+      }
+    ]
+  },
+  {
+    "name": "Lagoon Tent",
+    "motherId": 293955,
+    "found": true,
+    "base": 430,
+    "days": [
+      {
+        "date": "2026-09-05",
+        "price": 430,
+        "isDiscounted": false,
+        "expectedStage1": 387,
+        "expectedStage2": 409,
+        "expectedStage3": 419
+      },
+      {
+        "date": "2026-09-06",
+        "price": 430,
+        "isDiscounted": false,
+        "expectedStage1": 387,
+        "expectedStage2": 409,
+        "expectedStage3": 419
+      },
+      {
+        "date": "2026-09-07",
+        "price": 430,
+        "isDiscounted": false,
+        "expectedStage1": 387,
+        "expectedStage2": 409,
+        "expectedStage3": 419
+      },
+      {
+        "date": "2026-09-08",
+        "price": 430,
+        "isDiscounted": false,
+        "expectedStage1": 387,
+        "expectedStage2": 409,
+        "expectedStage3": 419
+      },
+      {
+        "date": "2026-09-09",
+        "price": 430,
+        "isDiscounted": false,
+        "expectedStage1": 387,
+        "expectedStage2": 409,
+        "expectedStage3": 419
+      },
+      {
+        "date": "2026-09-10",
+        "price": 430,
+        "isDiscounted": false,
+        "expectedStage1": 387,
+        "expectedStage2": 409,
+        "expectedStage3": 419
+      },
+      {
+        "date": "2026-09-11",
+        "price": 430,
+        "isDiscounted": false,
+        "expectedStage1": 387,
+        "expectedStage2": 409,
+        "expectedStage3": 419
+      },
+      {
+        "date": "2026-09-12",
+        "price": 430,
+        "isDiscounted": false,
+        "expectedStage1": 387,
+        "expectedStage2": 409,
+        "expectedStage3": 419
+      }
+    ]
+  },
+  {
+    "name": "Internal Room",
+    "motherId": 293942,
+    "found": false
+  },
+  {
+    "name": "Room 1",
+    "motherId": 293963,
+    "found": true,
+    "base": 10000,
+    "days": [
+      {
+        "date": "2026-09-05",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-06",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-07",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-08",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-09",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-10",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-11",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-12",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      }
+    ]
+  },
+  {
+    "name": "Room 2",
+    "motherId": 293959,
+    "found": true,
+    "base": 10000,
+    "days": [
+      {
+        "date": "2026-09-05",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-06",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-07",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-08",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-09",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-10",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-11",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-12",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      }
+    ]
+  },
+  {
+    "name": "Room 3",
+    "motherId": 293948,
+    "found": false
+  },
+  {
+    "name": "Room 4",
+    "motherId": 293945,
+    "found": false
+  },
+  {
+    "name": "Room 5",
+    "motherId": 293943,
+    "found": false
+  },
+  {
+    "name": "Lodge 1",
+    "motherId": 293951,
+    "found": false
+  },
+  {
+    "name": "Lodge 2",
+    "motherId": 883795,
+    "found": true,
+    "base": 10000,
+    "days": [
+      {
+        "date": "2026-09-05",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-06",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-07",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-08",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-09",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-10",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-11",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      },
+      {
+        "date": "2026-09-12",
+        "price": 10000,
+        "isDiscounted": false,
+        "expectedStage1": 9000,
+        "expectedStage2": 9500,
+        "expectedStage3": 9750
+      }
+    ]
+  },
+  {
+    "name": "Fake Bungalow 1",
+    "motherId": 649669,
+    "found": true,
+    "base": 1000,
+    "days": [
+      {
+        "date": "2026-09-05",
+        "price": 1000,
+        "isDiscounted": false,
+        "expectedStage1": 900,
+        "expectedStage2": 950,
+        "expectedStage3": 975
+      },
+      {
+        "date": "2026-09-06",
+        "price": 1000,
+        "isDiscounted": false,
+        "expectedStage1": 900,
+        "expectedStage2": 950,
+        "expectedStage3": 975
+      },
+      {
+        "date": "2026-09-07",
+        "price": 1000,
+        "isDiscounted": false,
+        "expectedStage1": 900,
+        "expectedStage2": 950,
+        "expectedStage3": 975
+      },
+      {
+        "date": "2026-09-08",
+        "price": 1000,
+        "isDiscounted": false,
+        "expectedStage1": 900,
+        "expectedStage2": 950,
+        "expectedStage3": 975
+      },
+      {
+        "date": "2026-09-09",
+        "price": 1000,
+        "isDiscounted": false,
+        "expectedStage1": 900,
+        "expectedStage2": 950,
+        "expectedStage3": 975
+      },
+      {
+        "date": "2026-09-10",
+        "price": 1000,
+        "isDiscounted": false,
+        "expectedStage1": 900,
+        "expectedStage2": 950,
+        "expectedStage3": 975
+      },
+      {
+        "date": "2026-09-11",
+        "price": 1000,
+        "isDiscounted": false,
+        "expectedStage1": 900,
+        "expectedStage2": 950,
+        "expectedStage3": 975
+      },
+      {
+        "date": "2026-09-12",
+        "price": 1000,
+        "isDiscounted": false,
+        "expectedStage1": 900,
+        "expectedStage2": 950,
+        "expectedStage3": 975
+      }
+    ]
+  },
+  {
+    "name": "Fake Bungalow 2",
+    "motherId": 921799,
+    "found": true,
+    "base": 1000,
+    "days": [
+      {
+        "date": "2026-09-05",
+        "price": 1000,
+        "isDiscounted": false,
+        "expectedStage1": 900,
+        "expectedStage2": 950,
+        "expectedStage3": 975
+      },
+      {
+        "date": "2026-09-06",
+        "price": 1000,
+        "isDiscounted": false,
+        "expectedStage1": 900,
+        "expectedStage2": 950,
+        "expectedStage3": 975
+      },
+      {
+        "date": "2026-09-07",
+        "price": 1000,
+        "isDiscounted": false,
+        "expectedStage1": 900,
+        "expectedStage2": 950,
+        "expectedStage3": 975
+      },
+      {
+        "date": "2026-09-08",
+        "price": 1000,
+        "isDiscounted": false,
+        "expectedStage1": 900,
+        "expectedStage2": 950,
+        "expectedStage3": 975
+      },
+      {
+        "date": "2026-09-09",
+        "price": 1000,
+        "isDiscounted": false,
+        "expectedStage1": 900,
+        "expectedStage2": 950,
+        "expectedStage3": 975
+      },
+      {
+        "date": "2026-09-10",
+        "price": 1000,
+        "isDiscounted": false,
+        "expectedStage1": 900,
+        "expectedStage2": 950,
+        "expectedStage3": 975
+      },
+      {
+        "date": "2026-09-11",
+        "price": 1000,
+        "isDiscounted": false,
+        "expectedStage1": 900,
+        "expectedStage2": 950,
+        "expectedStage3": 975
+      },
+      {
+        "date": "2026-09-12",
+        "price": 1000,
+        "isDiscounted": false,
+        "expectedStage1": 900,
+        "expectedStage2": 950,
+        "expectedStage3": 975
+      }
+    ]
+  }
+]

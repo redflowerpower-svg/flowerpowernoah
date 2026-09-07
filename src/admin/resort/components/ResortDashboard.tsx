@@ -530,7 +530,7 @@ export function ResortDashboard() {
   });
 
   return (
-    <div className="space-y-6 text-stone-100 p-4 sm:p-6" style={{ fontFamily: 'Inter, sans-serif' }}>
+    <div className="space-y-6 text-stone-100 w-full max-w-full" style={{ fontFamily: 'Inter, sans-serif' }}>
       
       {/* V17: Blocking Season Download Modal Overlay */}
       {seasonDownloadStatus !== 'completed' && (

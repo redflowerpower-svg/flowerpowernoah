@@ -1,5 +1,7 @@
 import { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
+import { executeAutoShieldForReservation } from "../_helpers/octorate-auto-shield.js";
+import { checkAndSyncCascadeLastMinute } from "../_helpers/octorate-cascade-sync.js";
 
 function getSupabaseAdmin() {
   const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || "";
@@ -555,6 +557,69 @@ export async function handleOctorateWebhook(req: VercelRequest, res: VercelRespo
 
           const results = await Promise.all(batchPromises);
           octorateStatus = results[0] || 200;
+        }
+
+        // 🛡️ [AUTO-SHIELD] Sigillatura forzata immediata tariffe derivate per la prenotazione ricevuta
+        try {
+          const targetResId = eventPayload?.id || eventPayload?.data?.id || eventPayload?.reservation?.id || eventPayload?.reservationId;
+          let targetBooking: any = null;
+
+          if (targetResId) {
+            targetBooking = bookingsData.find(b => String(b.id) === String(targetResId));
+            if (!targetBooking) {
+              try {
+                const singleRes = await fetch(`https://api.octorate.com/connect/rest/v1/reservation/366879/${targetResId}`, {
+                  headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Accept': 'application/json'
+                  }
+                });
+                if (singleRes.ok) {
+                  targetBooking = await singleRes.json();
+                }
+              } catch (fetchErr) {
+                console.warn('[OCTORATE WEBHOOK] Failed to fetch single reservation for Auto-Shield:', fetchErr);
+              }
+            }
+          }
+
+          // Se il webhook invia direttamente l'oggetto prenotazione nel payload
+          if (!targetBooking && (eventPayload?.checkin || eventPayload?.reservation?.checkin)) {
+            targetBooking = eventPayload.reservation || eventPayload;
+          }
+
+          if (targetBooking && (targetBooking.checkin || targetBooking.checkIn) && (targetBooking.checkout || targetBooking.checkOut)) {
+            const rawIn = targetBooking.checkin || targetBooking.checkIn;
+            const rawOut = targetBooking.checkout || targetBooking.checkOut;
+            const st = String(targetBooking.status || '').toUpperCase().trim();
+
+            if (st !== 'CANCELLED' && st !== 'CANCELED' && st !== 'DELETED' && st !== 'VOID') {
+              const bookerGuest = (targetBooking.guests || []).find((g: any) => g.type === 'BOOKER') || targetBooking.guests?.[0];
+              const guestName = bookerGuest ? `${bookerGuest.givenName || ''} ${bookerGuest.familyName || ''}`.trim() : (targetBooking.guestName || 'OTA Guest');
+
+              await executeAutoShieldForReservation({
+                accessToken,
+                checkIn: toThailandDateStr(rawIn),
+                checkOut: toThailandDateStr(rawOut),
+                roomName: targetBooking.roomName || targetBooking.accommodation_name || '',
+                productId: targetBooking.product || targetBooking.accommodation_id,
+                pmsProductId: targetBooking.pmsProduct,
+                reservationId: targetBooking.id || targetResId,
+                guestName,
+                channelName: targetBooking.channelName || targetBooking.channel || 'OTA Webhook',
+                supabaseAdmin
+              });
+            }
+          }
+        } catch (shieldErr) {
+          console.warn('[OCTORATE WEBHOOK] Auto-Shield error (non-blocking):', shieldErr);
+        }
+
+        // ⚡ [CASCADE LAST-MINUTE 24/7] Verifica e rinnovo automatico finestra 7 giorni sconti a cascata
+        try {
+          await checkAndSyncCascadeLastMinute(accessToken, supabaseAdmin);
+        } catch (cascadeErr) {
+          console.warn('[OCTORATE WEBHOOK] Cascade sync non-fatal warning:', cascadeErr);
         }
       }
     }

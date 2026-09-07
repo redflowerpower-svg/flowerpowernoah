@@ -52,6 +52,8 @@ export interface Accommodation {
 export interface AvailabilityResult {
   accommodationId: number
   available: boolean
+  minStayRequired?: number
+  isPhysicallyAvailable?: boolean
   pricePerNight: number
   totalPrice: number
   currency: string
@@ -633,7 +635,8 @@ function mapCalendarDataToAvailability(
 
   return calendarData.map((item) => {
     const days = item.days || [];
-    let isAvailable = days.length >= nights;
+    let isPhysicallyAvailable = days.length >= nights;
+    let requiredMinStay = 1;
     let totalPrice = 0;
     
     const checkInTime = new Date(checkIn + "T00:00:00").getTime();
@@ -649,26 +652,33 @@ function mapCalendarDataToAvailability(
         
         // Accurately check availability from Octorate day indicators
         if (day.availability !== undefined && day.availability <= 0) {
-          isAvailable = false;
+          isPhysicallyAvailable = false;
         }
         if (day.stopSells === true || day.stopSell === true || day.closed === true) {
-          isAvailable = false;
+          isPhysicallyAvailable = false;
         }
-        if (day.minStay && day.minStay > nights) {
-          isAvailable = false;
+        
+        // Track the real minimum stay required by Octorate
+        const dayMinStay = Number(day.minStay || day.minstay || 1);
+        if (dayMinStay > requiredMinStay) {
+          requiredMinStay = dayMinStay;
         }
       }
     });
 
     if (activeDaysCount < nights) {
-      isAvailable = false;
+      isPhysicallyAvailable = false;
     }
 
+    // Fully available only if physically free AND requested nights meet Octorate minStay
+    const isAvailable = isPhysicallyAvailable && nights >= requiredMinStay;
     const pricePerNight = activeDaysCount > 0 ? (totalPrice / activeDaysCount) : 0;
 
     return {
       accommodationId: Number(item.id),
       available: isAvailable,
+      minStayRequired: requiredMinStay,
+      isPhysicallyAvailable: isPhysicallyAvailable,
       pricePerNight: Math.round(pricePerNight),
       totalPrice: Math.round(totalPrice),
       currency: "THB"

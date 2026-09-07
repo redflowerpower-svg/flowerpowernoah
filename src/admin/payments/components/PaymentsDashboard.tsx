@@ -44,7 +44,7 @@ export const PaymentsDashboard: React.FC = () => {
   ];
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto font-sans text-stone-100 pb-12">
+    <div className="space-y-6 w-full max-w-full font-sans text-stone-100 pb-12">
       {/* Top Header Card */}
       <div className="bg-stone-900/90 border border-stone-800 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-md relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-amber-500/10 via-emerald-500/5 to-transparent pointer-events-none rounded-full blur-3xl"></div>

@@ -514,25 +514,25 @@ export default function BookingEngine({ lang: propLang, setLang: propSetLang }: 
         minCheckIn.setDate(minCheckIn.getDate() + 1);
       }
       const minCheckOut = new Date(minCheckIn);
-      minCheckOut.setDate(minCheckOut.getDate() + 2);
+      minCheckOut.setDate(minCheckOut.getDate() + 1);
       const y = minCheckOut.getFullYear();
       const m = String(minCheckOut.getMonth() + 1).padStart(2, '0');
       const d = String(minCheckOut.getDate()).padStart(2, '0');
       return `${y}-${m}-${d}`;
     }
     const date = parseLocalDate(checkIn);
-    date.setDate(date.getDate() + 2);
+    date.setDate(date.getDate() + 1);
     const y = date.getFullYear();
     const m = String(date.getMonth() + 1).padStart(2, '0');
     const d = String(date.getDate()).padStart(2, '0');
     return `${y}-${m}-${d}`;
   }, [checkIn]);
 
-  // Automatically adjust checkout if it doesn't satisfy minimum 2 nights
+  // Automatically adjust checkout if it is empty or before checkIn + 1 day
   useEffect(() => {
     if (checkIn) {
       const date = parseLocalDate(checkIn);
-      date.setDate(date.getDate() + 2);
+      date.setDate(date.getDate() + 1);
       const y = date.getFullYear();
       const m = String(date.getMonth() + 1).padStart(2, '0');
       const d = String(date.getDate()).padStart(2, '0');
@@ -858,12 +858,8 @@ export default function BookingEngine({ lang: propLang, setLang: propSetLang }: 
 
     const diffTime = end.getTime() - start.getTime()
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    const requiredMinStay = getBaselineMinStay(checkIn)
-    if (diffDays < requiredMinStay) {
-      const msg = lang === 'IT'
-        ? `Il soggiorno minimo per il periodo selezionato (${checkIn}) è di ${requiredMinStay} notti. Si prega di selezionare almeno ${requiredMinStay} notti.`
-        : `Minimum stay for the selected period (${checkIn}) is ${requiredMinStay} nights. Please select at least ${requiredMinStay} nights.`
-      alert(msg)
+    if (diffDays < 1) {
+      alert(lang === 'IT' ? "Si prega di selezionare almeno 1 notte." : "Please select at least 1 night.")
       return
     }
 
@@ -2132,6 +2128,18 @@ export default function BookingEngine({ lang: propLang, setLang: propSetLang }: 
                 onResetFilters={() => {
                   setSelectedCategory("Tutti")
                   setGuests(1)
+                }}
+                onExtendStay={(nightsNeeded: number) => {
+                  if (!checkIn) return;
+                  const date = parseLocalDate(checkIn);
+                  date.setDate(date.getDate() + nightsNeeded);
+                  const y = date.getFullYear();
+                  const m = String(date.getMonth() + 1).padStart(2, '0');
+                  const d = String(date.getDate()).padStart(2, '0');
+                  const newCheckOut = `${y}-${m}-${d}`;
+                  setCheckOut(newCheckOut);
+                  setCheckOutCalendarMonth(date);
+                  setHasSearched(true);
                 }}
                 onSelectRoom={(room, pricing, extras) => {
                   setSelectedRoom(room)

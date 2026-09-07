@@ -189,7 +189,7 @@ export function PizzaDashboard() {
   };
 
   return (
-    <div className="space-y-6 text-stone-100 p-4 sm:p-6" style={{ fontFamily: 'Inter, sans-serif' }}>
+    <div className="space-y-6 text-stone-100 w-full max-w-full" style={{ fontFamily: 'Inter, sans-serif' }}>
       
       {/* Top Banner Stats & Controls */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 bg-stone-900/90 border border-stone-800 rounded-3xl p-5 sm:p-6 shadow-xl">

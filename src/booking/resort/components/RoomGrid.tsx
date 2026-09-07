@@ -15,6 +15,7 @@ interface RoomGridProps {
   checkOut: string;
   onResetFilters?: () => void;
   onSelectRoom?: (room: any, pricing: any, extras: { breakfast: boolean; ac: boolean }) => void;
+  onExtendStay?: (nightsNeeded: number) => void;
   oauthConnected?: boolean;
 }
 
@@ -82,6 +83,7 @@ export const RoomGrid: React.FC<RoomGridProps> = ({
   checkOut,
   onResetFilters,
   onSelectRoom,
+  onExtendStay,
   oauthConnected,
 }) => {
   const { promoCodes } = useResortAdminStore();
@@ -358,11 +360,20 @@ export const RoomGrid: React.FC<RoomGridProps> = ({
       return false;
     }
 
-    // After availability check: hide rooms marked as unavailable by Octorate
+    // After availability check: hide rooms that are physically booked/blocked by Octorate.
+    // NOTE: If a room is physically free but requires more nights (minStay constraint),
+    // we KEEP it in filteredRooms so the guest sees the room with the minStay notice and extend button.
     if (availabilityChecked && !loadingAvailability && !isOctorateOffline && availabilityResults.length > 0 && room.octorateId) {
       const availMatch = availabilityResults.find((a) => String(a.accommodationId) === String(room.octorateId));
-      if (availMatch && !availMatch.available) {
-        return false;
+      if (availMatch) {
+        // If availMatch explicitly reports physically unavailable (booked/closed), filter it out
+        if (availMatch.isPhysicallyAvailable === false) {
+          return false;
+        }
+        // If neither available nor physically available (legacy fallback)
+        if (!availMatch.available && availMatch.isPhysicallyAvailable === undefined) {
+          return false;
+        }
       }
     }
 
@@ -377,16 +388,31 @@ export const RoomGrid: React.FC<RoomGridProps> = ({
     let basePrice = staticBasePrice;
     let isAvailable = true;
     let usingDynamicPrice = false;
+    let minStayRequired = 1;
+    let isPhysicallyAvailable = true;
+    let minStayBlocked = false;
 
     // Use dynamic availability/price if Octorate is online and we have results
     if (!isOctorateOffline && availabilityResults.length > 0 && item.octorateId) {
       const availMatch = availabilityResults.find((a) => String(a.accommodationId) === String(item.octorateId));
       if (availMatch) {
+        minStayRequired = availMatch.minStayRequired || 1;
+        isPhysicallyAvailable = availMatch.isPhysicallyAvailable !== undefined ? availMatch.isPhysicallyAvailable : availMatch.available;
+        
         if (availMatch.available) {
           basePrice = availMatch.pricePerNight || (stayDays > 0 ? (availMatch.totalPrice / stayDays) : staticBasePrice);
           usingDynamicPrice = true;
+          isAvailable = true;
         } else {
           isAvailable = false;
+          // Room is physically available, but blocked ONLY because stayDays < minStayRequired
+          if (isPhysicallyAvailable && stayDays < minStayRequired) {
+            minStayBlocked = true;
+            if (availMatch.pricePerNight && availMatch.pricePerNight > 0) {
+              basePrice = availMatch.pricePerNight;
+              usingDynamicPrice = true;
+            }
+          }
         }
       }
     }
@@ -414,6 +440,9 @@ export const RoomGrid: React.FC<RoomGridProps> = ({
         ? Math.round((item.base_price_high - discountedPrice) / item.base_price_high * 100)
         : Math.round(discountInfo.discount * 100),
       isAvailable,
+      minStayBlocked,
+      minStayRequired,
+      isPhysicallyAvailable,
       usingDynamicPrice
     };
   };
@@ -451,24 +480,7 @@ export const RoomGrid: React.FC<RoomGridProps> = ({
     );
   }
 
-  if (stayDays > 0 && stayDays < 2) {
-    return (
-      <div className="text-center py-16 bg-amber-50/40 rounded-2xl border border-amber-200 p-8 w-full">
-        <p className="text-amber-800 text-lg font-bold">
-          {lang === 'IT' ? "Soggiorno minimo di 2 notti" : 
-           lang === 'EN' ? "Minimum stay of 2 nights" :
-           lang === 'TH' ? "ระยะเวลาเข้าพักขั้นต่ำคือ 2 คืน" :
-           "Mindestaufenthalt von 2 Nächten"}
-        </p>
-        <p className="text-amber-700/80 text-sm mt-2 max-w-md mx-auto">
-          {lang === 'IT' ? "La nostra struttura accetta solo prenotazioni con un soggiorno minimo di 2 notti. Si prega di modificare le date selezionate." :
-           lang === 'EN' ? "Our resort requires a minimum stay of 2 nights. Please change your selected dates." :
-           lang === 'TH' ? "รีสอร์ทของเรากำหนดระยะเวลาเข้าพักขั้นต่ำ 2 คืน โปรดเปลี่ยนวันที่ที่คุณเลือก" :
-           "Unser Resort erfordert einen Mindestaufenthalt von 2 Nächten. Bitte ändern Sie Ihre ausgewählten Daten."}
-        </p>
-      </div>
-    );
-  }
+
 
   if (filteredRooms.length === 0) {
     return (
@@ -664,6 +676,18 @@ export const RoomGrid: React.FC<RoomGridProps> = ({
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                   {lang === 'TH' ? `สูงสุด ${item.capacity} ท่าน` : lang === 'DE' ? `Bis zu ${item.capacity} Gäste` : lang === 'EN' ? `Up to ${item.capacity} guests` : `Fino a ${item.capacity} ospiti`}
                 </span>
+
+                {/* MinStay / Gap-Fill Dynamic Badge — bottom left of image */}
+                {isUnlocked && pricing.minStayBlocked && (
+                  <span className="absolute bottom-4 left-4 bg-amber-600/95 border border-amber-400/60 text-white text-[9px] font-black tracking-wider px-3 py-1.5 rounded-xl shadow-md backdrop-blur-md flex items-center gap-1 animate-pulse">
+                    ℹ️ {lang === 'TH' ? `ขั้นต่ำ ${pricing.minStayRequired} คืน` : lang === 'DE' ? `Min. ${pricing.minStayRequired} Nächte` : lang === 'EN' ? `Min. ${pricing.minStayRequired} nights` : `Minimo ${pricing.minStayRequired} notti`}
+                  </span>
+                )}
+                {isUnlocked && pricing.isAvailable && stayDays === 1 && (
+                  <span className="absolute bottom-4 left-4 bg-emerald-600/95 border border-emerald-400/60 text-white text-[9px] font-black tracking-wider px-3 py-1.5 rounded-xl shadow-md backdrop-blur-md flex items-center gap-1">
+                    ⚡ {lang === 'TH' ? 'จองได้ 1 คืน (Gap-Fill)' : lang === 'DE' ? '1 Nacht Buchbar' : lang === 'EN' ? '1 Night Available' : 'Disponibile 1 Notte'}
+                  </span>
+                )}
  
                 {isUnlocked && discountInfo.label && (
                   <span className={`absolute top-4 right-4 ${discountInfo.color} text-white text-[9px] font-bold tracking-wider px-3 py-1.5 rounded-xl shadow-sm uppercase`}>
@@ -888,6 +912,20 @@ export const RoomGrid: React.FC<RoomGridProps> = ({
                               </p>
                             )}
                           </div>
+                        ) : pricing.minStayBlocked ? (
+                          <div className="py-1">
+                            <div className="flex items-baseline gap-2">
+                              <span className="text-xl font-extrabold text-stone-900">
+                                {formatPrice(pricingWithExtras ? pricingWithExtras.final : pricing.final)}
+                              </span>
+                              <span className="text-[10px] text-stone-500 font-medium">
+                                /{lang === 'TH' ? 'คืน' : lang === 'DE' ? 'Nacht' : lang === 'EN' ? 'night' : 'notte'}
+                              </span>
+                            </div>
+                            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-300/80 px-2.5 py-0.5 rounded-lg mt-1">
+                              ℹ️ {lang === 'TH' ? `ขั้นต่ำ ${pricing.minStayRequired} คืน` : lang === 'DE' ? `Mindestaufenthalt: ${pricing.minStayRequired} Nächte` : lang === 'EN' ? `Minimum stay: ${pricing.minStayRequired} nights` : `Soggiorno minimo: ${pricing.minStayRequired} notti`}
+                            </span>
+                          </div>
                         ) : (
                           <div className="py-2">
                             <span className="inline-block text-xs font-bold text-red-700 bg-red-50 border border-red-200 px-3 py-1 rounded-xl">
@@ -913,6 +951,19 @@ export const RoomGrid: React.FC<RoomGridProps> = ({
                              {lang === 'TH' ? 'ดูตัวเลือก' : lang === 'DE' ? 'Konfigurieren' : lang === 'EN' ? 'Configure' : 'Configura'}
                           </button>
                         )
+                      ) : pricing.minStayBlocked ? (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (onExtendStay) {
+                              onExtendStay(pricing.minStayRequired);
+                            }
+                          }}
+                          className="bg-amber-600 hover:bg-amber-700 active:bg-amber-800 text-white text-xs font-bold px-4 py-2.5 rounded-full shadow-md hover:shadow-lg active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-1.5 whitespace-nowrap"
+                          title={lang === 'IT' ? `Estendi il soggiorno a ${pricing.minStayRequired} notti per prenotare` : `Extend stay to ${pricing.minStayRequired} nights to book`}
+                        >
+                          <span>➕ {lang === 'TH' ? `เพิ่มเป็น ${pricing.minStayRequired} คืน` : lang === 'DE' ? `Auf ${pricing.minStayRequired} Nächte` : lang === 'EN' ? `Extend to ${pricing.minStayRequired} nights` : `Estendi a ${pricing.minStayRequired} notti`}</span>
+                        </button>
                       ) : (
                         <button
                           disabled

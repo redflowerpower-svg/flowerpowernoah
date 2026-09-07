@@ -161,6 +161,19 @@ export async function handleCreateCheckoutSession(req: VercelRequest, res: Verce
           const targetRoom = items.find((item: any) => item.id === Number(accommodationId) || item.room === Number(accommodationId));
 
           if (targetRoom && targetRoom.days && targetRoom.days.length > 0) {
+            // Verify Octorate minStay restriction
+            let maxMinStayRequired = 1;
+            targetRoom.days.forEach((d: any) => {
+              const ms = Number(d.minStay || d.minstay || 1);
+              if (ms > maxMinStayRequired) maxMinStayRequired = ms;
+            });
+
+            if (nights < maxMinStayRequired) {
+              return res.status(400).json({
+                error: `Soggiorno minimo non rispettato. Questo alloggio richiede almeno ${maxMinStayRequired} notti.`
+              });
+            }
+
             const totalPriceFromOct = targetRoom.days.reduce((acc: number, day: any) => acc + (day.price || 0), 0);
             if (totalPriceFromOct > 0) {
               baseRoomPricePerNight = Math.round(totalPriceFromOct / targetRoom.days.length);

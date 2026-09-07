@@ -9,8 +9,8 @@ interface AdminHeaderProps {
 
 export function AdminHeader({ userEmail, activeDept, onSelectDept, onLogout }: AdminHeaderProps) {
   return (
-    <header className="bg-stone-900/90 backdrop-blur-md border-b border-stone-800 static sm:sticky sm:top-0 z-40 px-4 py-3">
-      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+    <header className="bg-stone-900/90 backdrop-blur-md border-b border-stone-800 static sm:sticky sm:top-0 z-40 px-3 sm:px-6 py-3 w-full">
+      <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-3">
         {/* Left Branding */}
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-black text-sm shadow-inner">
