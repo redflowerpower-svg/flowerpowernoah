@@ -54,6 +54,15 @@ L'esperienza visiva del sito si basa su un'interfaccia fortemente immersiva con 
   - Il totale da pagare oggi mostra il prezzo unico definitivo con la dicitura discreta multilingua: *"VAT and applicable payment processing costs included."*
 - **Modalità Simulazione Segreta (`Snooker0`)**:
   - Inserendo `Snooker0` nel campo nome ospite, il server convalida l'impronta crittografica SHA-256 e simula il flusso di prenotazione a costo zero, aprendo direttamente il Voucher ufficiale.
+- **Gestione Dinamica Min Stay Octorate & Ricerca a 1 Notte (Gap-Fill Ready)**:
+  - **Sblocco Ricerca Flessibile**: Rimosso il blocco a monte su `diffDays < requiredMinStay` in `booking-engine.tsx`; l'ospite può cercare liberamente a partire da 1 notte (`diffDays >= 1`).
+  - **Single Source of Truth su Octorate**: `octorate.ts` interroga direttamente il `minStay` reale restituito da Octorate per ogni camera e data, distinguendo `isPhysicallyAvailable` (camera libera fisicamente) da `available` (soddisfa sia disponibilità che soggiorno minimo).
+  - **Card Camere Intelligenti (`RoomGrid.tsx`)**:
+    - Se la camera è prenotabile a 1 notte (Gap-Fill attivo su Octorate): mostra badge `⚡ Disponibile 1 Notte (Gap-Fill)` e pulsante verde attivo.
+    - Se la camera è libera ma richiede più notti (es. 2, 3 o 5 notti da Octorate): la camera **rimane visibile**, mostra il prezzo per notte, il badge `ℹ️ Soggiorno minimo: {N} notti` ed il pulsante d'azione rapida `➕ Estendi a {N} notti` che aggiorna il checkout con 1 click.
+    - Se la camera è occupata o in Stop Sell: mostra `Non disponibile`.
+  - **Protezione Server-Side (`checkout.ts`)**: Validazione rigorosa che respinge con errore `400` se le notti richieste sono inferiori al `minStay` Octorate prima di generare la sessione di pagamento.
+  - **Octorate Auto-Shield & Cascade Sync**: Protezione automatica post-prenotazione su tariffe derivate per prevenire overbooking e aperture involontarie.
 
 ---
 
